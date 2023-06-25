@@ -1,1 +1,162 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/cropperjs/src/css/cropper.css";
+
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary: #FF5722;
+    --lighter-primary: #FF8A50;
+    --accent: #FFC107;
+    --lighter-accent: #FFD94D;
+    --secondary: #2196F3;
+    --background: #F5F5F5;
+    --text-primary: #212121;
+    --text-secondary: #757575;
+    --divider: #BDBDBD;
+}
+
+@import '../node_modules/@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core();
+
+// Define the default theme (same as the example above).
+$app-primary: mat-palette($mat-indigo);
+$app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$app-theme:   mat-light-theme($app-primary, $app-accent);
+
+// Include the default theme styles.
+@include angular-material-theme($app-theme);
+
+
+// Define an alternate dark theme.
+$dark-primary: mat-palette($mat-grey);
+$dark-accent:  mat-palette($mat-cyan, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// Include the alternative theme styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
+.unicorn-dark-theme {
+  @include angular-material-theme($dark-theme);
+  --primary: #FF5722;
+  --accent: #FFC107;
+  --secondary: #2196F3;
+  --background: #212121;
+  --text-primary: #FFFFFF;
+  --text-secondary: #BDBDBD;
+  --divider: #757575;
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Calibre", "Inter", "San Francisco", "SF Pro Text", -apple-system, system-ui, sans-serif; }
+
+.mr-8 {
+    margin-right: 8px !important;
+}
+
+.mr-3 {
+  margin-right: 3px;
+}
+
+.flex-stretch {
+    flex: 1 0 auto;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: var(--spacing);
+  text-transform: none;
+  line-height: 1.25;
+  margin-bottom: .75rem;
+  font-family: var(--ff-primary);
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: .875rem;
+}
+
+.slideTop {
+  animation: var(--slide-top);
+}
+
+//rubber-band animation
+@keyframes rubberBand {
+  from {
+      transform: scale3d(1, 1, 1);
+    }
+  
+    30% {
+      transform: scale3d(1.25, 0.75, 1);
+    }
+  
+    40% {
+      transform: scale3d(0.75, 1.25, 1);
+    }
+  
+    50% {
+      transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+      transform: scale3d(.95, 1.05, 1);
+    }
+  
+    75% {
+      transform: scale3d(1.05, .95, 1);
+    }
+  
+    to {
+      transform: scale3d(1, 1, 1);
+    }
+}
+
+//Slide-Up Animation
+@keyframes slide_up{
+  0%{
+    opacity: 0.2;
+    transform:translateY(120px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+//Scroll-Bar Design
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
