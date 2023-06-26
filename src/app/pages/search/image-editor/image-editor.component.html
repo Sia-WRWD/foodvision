@@ -1,5 +1,10 @@
-<div class="canvas">
+<div id="canvasMain" #canvasMain class="my-2">
     <img id="image" src="../../../assets/asdf.jpg">
 </div>
-<canvas id="myCanvas"></canvas>
-<button (click)="onConfirm()">Confirm</button>
+<div id="canvasConfirm" #canvasConfirm class="my-2"> <!--Store it in a modal instead.-->
+    <img id="image2">
+</div>
+<div class="action-btn-container">
+    <button (click)="onConfirm()">Confirm</button>
+    <button (click)="onRestore()">Restore</button>
+</div>

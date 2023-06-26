@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import Cropper from 'cropperjs';
 
 @Component({
@@ -10,11 +10,19 @@ export class ImageEditorComponent {
 
   cropInstance: Cropper | null = null;
   data: any;
+  isHidden: boolean = false;
+  isHidden2: boolean = true;
+  @ViewChild('canvasConfirm', { static: true }) canvasConfirm!: ElementRef;
+  @ViewChild('canvasMain', { static: true }) canvasMain!: ElementRef;
 
   constructor() { }
 
   ngOnInit() {
     this.startCropper();
+  }
+
+  ngAfterViewInit() {
+    this.hideConfirmCanvas();
   }
 
   startCropper() {
@@ -32,28 +40,39 @@ export class ImageEditorComponent {
   onConfirm() {
     if (this.cropInstance) {
       this.cropInstance.crop();
-      var heightWidth = this.cropInstance.getData();
 
       this.data = this.cropInstance.getCroppedCanvas().toDataURL('image/jpeg');
 
-      var canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
-      var context = canvas.getContext('2d');
+      var image2 = document.getElementById("image2");
+      image2?.setAttribute("src", this.data);
 
-      if (canvas && context) {
-        canvas.width = heightWidth.width;
-        canvas.height = heightWidth.height;
-
-        console.log(canvas.width);
-
-        var image = new Image();
-        image.onload = function () {
-          context?.drawImage(image, 0, 0);
-        };
-        image.src = this.data;
-
-        var image2 = document.getElementById("image");
-        image2?.setAttribute("src", this.data);
-      }
+      this.showConfirmCanvas();
+      this.hideMainCanvas();
     }
+  }
+
+  onRestore() {
+    this.hideConfirmCanvas();
+    this.showMainCanvas();
+  }
+
+  hideConfirmCanvas() {
+    const canvasConfirmElement: HTMLElement = this.canvasConfirm.nativeElement;
+    canvasConfirmElement.style.display = "none";
+  }
+
+  showConfirmCanvas() {
+    const canvasConfirmElement: HTMLElement = this.canvasConfirm.nativeElement;
+    canvasConfirmElement.style.display = "flex";
+  }
+
+  showMainCanvas() {
+    const canvasMainElement: HTMLElement = this.canvasMain.nativeElement;
+    canvasMainElement.style.display = "flex";
+  }
+
+  hideMainCanvas() {
+    const canvasMainElement: HTMLElement = this.canvasMain.nativeElement;
+    canvasMainElement.style.display = "none";
   }
 }

@@ -1,0 +1,18 @@
+::ng-deep .cropper-bg {
+    background-image: none !important;
+    background: black;
+}
+
+#canvasMain, #canvasConfirm {
+    display: flex;
+    justify-content: center;
+}
+
+.action-btn-container {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
