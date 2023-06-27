@@ -1,1 +1,6 @@
-search here!
+<button mat-button (click)="openDialog()">Open dialog</button>
+<ng-template #imageEditor>
+    <mat-dialog-content>
+        <app-image-editor [imageUrl]="imgUrl"></app-image-editor>
+    </mat-dialog-content>
+</ng-template>

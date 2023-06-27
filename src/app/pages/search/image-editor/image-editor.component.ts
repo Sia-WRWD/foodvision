@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Cropper from 'cropperjs';
 
 @Component({
@@ -10,19 +10,19 @@ export class ImageEditorComponent {
 
   cropInstance: Cropper | null = null;
   data: any;
-  isHidden: boolean = false;
-  isHidden2: boolean = true;
   @ViewChild('canvasConfirm', { static: true }) canvasConfirm!: ElementRef;
   @ViewChild('canvasMain', { static: true }) canvasMain!: ElementRef;
+  @Input() imageUrl!: string;
 
   constructor() { }
 
   ngOnInit() {
-    this.startCropper();
+
   }
 
   ngAfterViewInit() {
     this.hideConfirmCanvas();
+    this.startCropper();
   }
 
   startCropper() {
@@ -30,7 +30,7 @@ export class ImageEditorComponent {
 
     if (image instanceof HTMLImageElement) {
       this.cropInstance = new Cropper(image, {
-        // options here
+        viewMode: 2
       });
     } else {
       console.error('Invalid element');

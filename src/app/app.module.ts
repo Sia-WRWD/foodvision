@@ -14,6 +14,8 @@ import { Error404Component } from './pages/error404/error404.component';
 import { InformationComponent } from './pages/information/information.component';
 import { AllergyInformationComponent } from './pages/information/allergy-information/allergy-information.component';
 import { FoodInformationComponent } from './pages/information/food-information/food-information.component';
+import { SearchComponent } from './pages/search/search.component';
+import { ImageEditorComponent } from './pages/search/image-editor/image-editor.component';
 
 //Firebase
 import { AngularFireModule } from '@angular/fire/compat';
@@ -25,8 +27,6 @@ import { environment } from './environments/environment';
 
 //Other Libraries
 import { NgxHideOnScrollModule } from 'ngx-hide-on-scroll';
-import { SearchComponent } from './pages/search/search.component';
-import { ImageEditorComponent } from './pages/search/image-editor/image-editor.component';
 
 @NgModule({
   declarations: [

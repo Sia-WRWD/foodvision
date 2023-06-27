@@ -38,8 +38,8 @@
 }
 
 .content-container {
-  height: calc(100% - 64px); //100% - Header Height - Margin Height - Footer Height
-  // margin: 20px 25px 20px 25px; //TLBR
+  height: calc(100% - 64px);
+  overflow-y: scroll;
 }
 
 .menu-icon {

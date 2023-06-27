@@ -25,10 +25,6 @@ const routes: Routes = [
     component: SearchComponent
   },
   {
-    path: 'image-editor',
-    component: ImageEditorComponent
-  },
-  {
     path: '**',
     component: Error404Component
   }
