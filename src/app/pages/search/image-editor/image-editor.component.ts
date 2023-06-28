@@ -26,10 +26,11 @@ export class ImageEditorComponent {
   }
 
   startCropper() {
-    var image = document.getElementById('image');
+    var image = document.getElementById('originalImage');
 
     if (image instanceof HTMLImageElement) {
       this.cropInstance = new Cropper(image, {
+        initialAspectRatio: .75,
         viewMode: 2
       });
     } else {
@@ -37,13 +38,13 @@ export class ImageEditorComponent {
     }
   }
 
-  onConfirm() {
+  crop() {
     if (this.cropInstance) {
       this.cropInstance.crop();
 
       this.data = this.cropInstance.getCroppedCanvas().toDataURL('image/jpeg');
 
-      var image2 = document.getElementById("image2");
+      var image2 = document.getElementById("croppedImage");
       image2?.setAttribute("src", this.data);
 
       this.showConfirmCanvas();
@@ -51,7 +52,7 @@ export class ImageEditorComponent {
     }
   }
 
-  onRestore() {
+  restore() {
     this.hideConfirmCanvas();
     this.showMainCanvas();
   }

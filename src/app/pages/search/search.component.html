@@ -1,4 +1,58 @@
-<button mat-button (click)="openDialog()">Open dialog</button>
+<div class="center-container">
+    <div class="flex-container">
+        <div class="left-container file-input">
+            <ng-container *ngIf="hasFile === false; else showImage">
+                <label for="image-input" class="drop-container">
+                    <span class="drop-title">Drop files here</span>
+                    or
+                    <input type="file" id="image-input" accept="image/*" (change)="onFileChange($event)" capture
+                        required #imageInput>
+                </label>
+            </ng-container>
+            <ng-template #showImage>
+                <div class="image-preview-container d-flex justify-content-center">
+                    <img id="image-preview" alt="image-preview.jpg" [src]="imgUrl" #imagePreview />
+                </div>
+                <div class="img-action-container d-flex flex-direction-row justify-content-center">
+                    <button mat-raised-button (click)="removeImage()" style="margin-right: .25rem;" title="remove image"
+                        class="close-btn">
+                        <mat-icon class="m-0">close</mat-icon>
+                    </button>
+                    <button mat-raised-button (click)="openDialog()" title="crop" class="crop-btn">
+                        <mat-icon class="m-0">crop</mat-icon>
+                    </button>
+                </div>
+            </ng-template>
+        </div>
+        <div class="right-container allergy-filter">
+            <p class="h2 legend">I am Allergic to:</p>
+            <div class="checkbox-group">
+                <ng-container *ngFor="let allergen of allergens">
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" class="checkbox-input" [(ngModel)]="allergen.checked" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <fa-icon [icon]="allergen.icon" class="fa-icon"></fa-icon>
+                                </span>
+                                <span class="checkbox-label">
+                                    {{allergen.name}}
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-container">
+        <button mat-raised-button class="predict-btn my-4" (click)="getSelectedAllergens()">
+            <span class="predict-btn-text">
+                What Food is This? 🤔
+            </span>
+        </button>
+    </div>
+</div>
 <ng-template #imageEditor>
     <mat-dialog-content>
         <app-image-editor [imageUrl]="imgUrl"></app-image-editor>

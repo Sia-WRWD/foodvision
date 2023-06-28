@@ -1,10 +1,10 @@
-<div id="canvasMain" #canvasMain class="my-2">
-    <img id="image" src="{{imageUrl}}">
+<div id="canvasMain" #canvasMain>
+    <img id="originalImage" src="{{imageUrl}}">
 </div>
-<div id="canvasConfirm" #canvasConfirm class="my-2"> <!--Store it in a modal instead.-->
-    <img id="image2">
+<div id="canvasConfirm" #canvasConfirm> <!--Store it in a modal instead.-->
+    <img id="croppedImage">
 </div>
 <div class="action-btn-container">
-    <button (click)="onConfirm()">Confirm</button>
-    <button (click)="onRestore()">Restore</button>
+    <button (click)="crop()">Confirm</button>
+    <button (click)="restore()">Restore</button>
 </div>

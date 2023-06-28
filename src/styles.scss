@@ -14,6 +14,9 @@
     --text-primary: #212121;
     --text-secondary: #757575;
     --divider: #BDBDBD;
+    --black2white: #000000;
+    --white2black: #ffffff;
+    --bgwhite2black: rgb(255, 255, 255, 0.9);
 }
 
 @import '../node_modules/@angular/material/theming';
@@ -51,6 +54,9 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   --text-primary: #FFFFFF;
   --text-secondary: #BDBDBD;
   --divider: #757575;
+  --black2white: #ffffff;
+  --white2black: #000000;
+  --bgwhite2black: rgb(0, 0, 0, 0.6);
 }
 
 /* You can add global styles to this file, and also import other style files */

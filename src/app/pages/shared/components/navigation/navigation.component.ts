@@ -1,7 +1,6 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -53,9 +52,9 @@ export class NavigationComponent {
     var contentBackground = document.getElementById("content-background");
 
     if (val) {
-      contentBackground!.style.backgroundImage = "url('../../../assets/bg-dark.jpg')";
+      contentBackground!.style.backgroundImage = "url('../../../assets/background/bg-dark.jpg')";
     } else {
-      contentBackground!.style.backgroundImage = "url('../../../assets/bg-light.jpg')";
+      contentBackground!.style.backgroundImage = "url('../../../assets/background/bg-light.jpg')";
     }
   }
 }

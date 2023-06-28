@@ -21,6 +21,10 @@ const routes: Routes = [
     component: InformationComponent
   },
   {
+    path: 'image-editor',
+    component: ImageEditorComponent
+  },
+  {
     path: 'search',
     component: SearchComponent
   },

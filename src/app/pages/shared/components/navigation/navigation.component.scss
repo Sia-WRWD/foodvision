@@ -1,8 +1,7 @@
 .sidenav-container {
   height: 100%;
-  background-image: url("../../../../../assets/bg-light.jpg");
+  background-image: url("../../../../../assets/background/bg-light.jpg");
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
   position: relative;
 
@@ -13,7 +12,7 @@
     height: 100%;
     width: 100%;
     content: "";
-    background: rgb(255, 255, 255, 0.9);
+    background: var(--bgwhite2black);
   }
 }
 
@@ -38,8 +37,7 @@
 }
 
 .content-container {
-  height: calc(100% - 64px);
-  overflow-y: scroll;
+  height: 100%;
 }
 
 .menu-icon {
@@ -157,5 +155,11 @@
   .nav-content-container {
     padding: 0 !important;
     padding-right: 7px !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .content-container {
+    height: auto !important;
   }
 }
