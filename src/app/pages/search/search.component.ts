@@ -1,8 +1,9 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { faEgg, faWheatAlt, faCow, faTree, faShrimp, faFishFins, faSeedling, faPlateWheat } from '@fortawesome/free-solid-svg-icons';
 import { SharedService } from '../shared/shared.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -13,6 +14,7 @@ export class SearchComponent {
 
   imgUrl: string = "";
   @ViewChild('imageEditor') imageEditor!: TemplateRef<any>;
+  @ViewChild('progressLoader') progressLoader!: TemplateRef<any>;
   @ViewChild('imageInput') imageInput!: any;
   @ViewChild('imagePreview') imagePreview!: HTMLElement;
   hasFile: boolean = false;
@@ -30,14 +32,22 @@ export class SearchComponent {
     { icon: faPlateWheat, name: "Sesame", checked: false },
   ];
   selectedAllergens: string[] = [];
+  isLoading: boolean = false;
+  statusMessage: string = "";
+  status: string = "";
 
-  constructor(public dialog: MatDialog, private sharedService: SharedService, private http: HttpClient) { }
+  constructor(
+    public dialog: MatDialog, 
+    private sharedService: SharedService, 
+    private http: HttpClient,
+    private router: Router
+    ) { }
 
   ngOnInit() {
 
   }
 
-  openDialog() {
+  openCropDialog() {
     const dialogRef = this.dialog.open(this.imageEditor, {
       data: { imageUrl: this.imgUrl }
     })
@@ -65,11 +75,13 @@ export class SearchComponent {
         this.hasFile = true;
         this.saveImageFile(file);
         this.readImageFile(file);
+        //Message Handler to Inform user.
+        this.sharedService.showSnackbar("Successfully uploaded file! 💯", "ok");
       } else {
         this.imageInput.nativeElement.value = '';
         this.hasFile = false;
         //Message Handler to Inform user.
-        this.sharedService.showSnackbar("Please only upload image files! ❌", "ok");
+        this.sharedService.showSnackbar("Only image files allowed! ❌", "ok");
       }
     }
   }
@@ -107,6 +119,7 @@ export class SearchComponent {
 
   predict() {
     this.getSelectedAllergens();
+    this.openProgressDialog();
     this.classify();
   }
 
@@ -125,24 +138,51 @@ export class SearchComponent {
         (data: any) => {
           this.response = data.predicted_label;
           this.getClassifiedFoodData(this.response);
+          this.statusMessage = "Successfully classified the food!"
+          this.status = "success";
         },
         (error: any) => {
-          console.error(error);
+          if (error.status === 0) {
+            this.statusMessage = "Something is wrong with the server, please try again later! 🛠️";
+          } else if (error.status === 400) {
+            this.statusMessage = "Something is wrong with the file sent, please try again later! ⚠️";
+          } else if (error.status === 500) {
+            this.statusMessage = "Input is empty or incompatible image type! 😞";
+          }
+          this.status = "failure";
+          this.isLoading = false;
         }
       );
     } catch (error) {
-      console.error(error);
+      //console.error(error);
     }
   }
 
   getClassifiedFoodData(food: string) {
     this.sharedService.getFoodInfo(food).subscribe((data: any) => {
-      const foodInfo = data;
-      // Continue with further processing or assign the variable to a class property
-      this.classifiedFoodData = foodInfo;
-      console.log(this.classifiedFoodData);
+      this.classifiedFoodData = data; //Assign data to variable
+      this.isLoading = false;
     }, (error: any) => {
-      console.error(error);
+      //console.error(error);
     });
+  }
+
+  openProgressDialog() {
+    this.isLoading = true;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+
+    this.dialog.open(this.progressLoader, dialogConfig);
+  }
+
+  closeProgressDialog() {
+    if (this.status == "failure") {
+      this.dialog.closeAll();
+      this.hasFile = false;
+      this.imageInput.nativeElement.value = '';
+    } else {
+      this.dialog.closeAll();
+      this.router.navigate(['/information'], { state: { foodInfo: this.classifiedFoodData } });
+    }
   }
 }

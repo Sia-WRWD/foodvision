@@ -14,11 +14,11 @@
                     <img id="image-preview" alt="image-preview.jpg" [src]="imgUrl" #imagePreview />
                 </div>
                 <div class="img-action-container d-flex flex-direction-row justify-content-center">
-                    <button mat-raised-button (click)="removeImage()" style="margin-right: .25rem;" matTooltip="Remove Image"
-                        class="close-btn">
+                    <button mat-raised-button (click)="removeImage()" style="margin-right: .25rem;"
+                        matTooltip="Remove Image" class="close-btn">
                         <mat-icon class="m-0">close</mat-icon>
                     </button>
-                    <button mat-raised-button (click)="openDialog()" matTooltip="Crop" class="crop-btn">
+                    <button mat-raised-button (click)="openCropDialog()" matTooltip="Crop" class="crop-btn">
                         <mat-icon class="m-0">crop</mat-icon>
                     </button>
                 </div>
@@ -54,7 +54,26 @@
     </div>
 </div>
 <ng-template #imageEditor>
-    <mat-dialog-content>
+    <mat-dialog-content class="image-editor-dialog">
         <app-image-editor [imageUrl]="imgUrl"></app-image-editor>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #progressLoader>
+    <mat-dialog-content class="progress-loader-dialog">
+        <div class="loader-modal-content">
+            <img src="../../../assets/logo/loader.png" alt="loader.png" style="width: 100%; height: 100%;">
+            <ng-container *ngIf="isLoading == true; else showMessage">
+                <mat-progress-bar mode="indeterminate" style="border-radius: 15px;"></mat-progress-bar>
+            </ng-container>
+            <ng-template #showMessage>
+                <p class="h3"
+                    style="font-weight: 700; letter-spacing: 1px; text-align: center; font-size: 1rem; line-height: 1.5;">
+                    {{statusMessage}}
+                </p>
+                <button mat-raised-button (click)="closeProgressDialog()" class="btnClose w-50">
+                    Ok
+                </button>
+            </ng-template>
+        </div>
     </mat-dialog-content>
 </ng-template>
