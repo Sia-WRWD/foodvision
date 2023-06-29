@@ -5,6 +5,14 @@
     <img id="croppedImage">
 </div>
 <div class="action-btn-container">
-    <button (click)="crop()">Confirm</button>
-    <button (click)="restore()">Restore</button>
+    <ng-container *ngIf="croppedData == ''">
+        <button mat-raised-button color="primary" (click)="crop()" matTooltip="Confirm Crop">
+            <mat-icon>done</mat-icon>
+        </button>
+    </ng-container>
+    <ng-container *ngIf="croppedData !== ''">
+        <button mat-raised-button color="warn" (click)="restore()" matTooltip="Restore Crop">
+            <mat-icon>restore</mat-icon>
+        </button>
+    </ng-container>
 </div>

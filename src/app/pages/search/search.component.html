@@ -14,11 +14,11 @@
                     <img id="image-preview" alt="image-preview.jpg" [src]="imgUrl" #imagePreview />
                 </div>
                 <div class="img-action-container d-flex flex-direction-row justify-content-center">
-                    <button mat-raised-button (click)="removeImage()" style="margin-right: .25rem;" title="remove image"
+                    <button mat-raised-button (click)="removeImage()" style="margin-right: .25rem;" matTooltip="Remove Image"
                         class="close-btn">
                         <mat-icon class="m-0">close</mat-icon>
                     </button>
-                    <button mat-raised-button (click)="openDialog()" title="crop" class="crop-btn">
+                    <button mat-raised-button (click)="openDialog()" matTooltip="Crop" class="crop-btn">
                         <mat-icon class="m-0">crop</mat-icon>
                     </button>
                 </div>
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="bottom-container">
-        <button mat-raised-button class="predict-btn my-4" (click)="getSelectedAllergens()">
+        <button mat-raised-button class="predict-btn my-4" (click)="predict()">
             <span class="predict-btn-text">
                 What Food is This? 🤔
             </span>

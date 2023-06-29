@@ -14,14 +14,21 @@
 
 .action-btn-container {
     position: fixed;
-    bottom: 0;
+    left: 50%;
+    right: 50%;
+    bottom: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
+    column-gap: 10px;
 }
 
 #originalImage, #croppedImage {
     height: 100%;
     width: 100%;
+}
+
+mat-icon {
+    margin: 0 !important;
 }

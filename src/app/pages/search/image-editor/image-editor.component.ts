@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Cropper from 'cropperjs';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-image-editor',
@@ -9,12 +10,12 @@ import Cropper from 'cropperjs';
 export class ImageEditorComponent {
 
   cropInstance: Cropper | null = null;
-  data: any;
+  croppedData: any = "";
   @ViewChild('canvasConfirm', { static: true }) canvasConfirm!: ElementRef;
   @ViewChild('canvasMain', { static: true }) canvasMain!: ElementRef;
   @Input() imageUrl!: string;
 
-  constructor() { }
+  constructor(private sharedService: SharedService) { }
 
   ngOnInit() {
 
@@ -42,10 +43,12 @@ export class ImageEditorComponent {
     if (this.cropInstance) {
       this.cropInstance.crop();
 
-      this.data = this.cropInstance.getCroppedCanvas().toDataURL('image/jpeg');
+      this.croppedData = this.cropInstance.getCroppedCanvas().toDataURL('image/jpeg');
 
       var image2 = document.getElementById("croppedImage");
-      image2?.setAttribute("src", this.data);
+      image2?.setAttribute("src", this.croppedData);
+
+      this.sharedService.setCroppedImage(this.croppedData);
 
       this.showConfirmCanvas();
       this.hideMainCanvas();
@@ -55,6 +58,7 @@ export class ImageEditorComponent {
   restore() {
     this.hideConfirmCanvas();
     this.showMainCanvas();
+    this.croppedData = "";
   }
 
   hideConfirmCanvas() {
