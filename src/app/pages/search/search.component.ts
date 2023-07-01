@@ -176,6 +176,7 @@ export class SearchComponent {
   getClassifiedFoodData(food: string) {
     this.sharedService.getFoodInfo(food).subscribe((data: any) => {
       this.classifiedFoodData = data; //Assign data to variable
+      sessionStorage.setItem("foodInfo", JSON.stringify(this.classifiedFoodData));
       this.isLoading = false;
     }, (error: any) => {
       //console.error(error);
@@ -197,7 +198,6 @@ export class SearchComponent {
       this.imageInput.nativeElement.value = '';
     } else {
       this.dialog.closeAll();
-      sessionStorage.setItem("foodInfo", JSON.stringify(this.classifiedFoodData));
       this.router.navigate(['/information']);
     }
   }
