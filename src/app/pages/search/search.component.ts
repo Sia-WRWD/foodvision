@@ -44,7 +44,21 @@ export class SearchComponent {
     ) { }
 
   ngOnInit() {
+    this.checkExistingAllergens();
+  }
 
+  checkExistingAllergens() {
+    const selectedAllergens = JSON.parse(sessionStorage.getItem('selectedAllergens')!);
+
+    if (selectedAllergens && selectedAllergens.length > 0) {
+      const matchingAllergens = this.allergens.filter(allergen =>
+        selectedAllergens.includes(allergen.name)
+      );
+    
+      matchingAllergens.forEach(allergen => {
+        allergen.checked = true;
+      });
+    }
   }
 
   openCropDialog() {
@@ -137,7 +151,8 @@ export class SearchComponent {
       this.http.post('http://localhost:5000/predict', formData).subscribe(
         (data: any) => {
           this.response = data.predicted_label;
-          this.getClassifiedFoodData(this.response);
+          sessionStorage.setItem("classifiedFood", this.response); //Save Classified Food's Name.
+          this.getClassifiedFoodData(this.response); //Get Classified Food's Data from Firebase.
           this.statusMessage = "Successfully classified the food!"
           this.status = "success";
         },
@@ -182,7 +197,8 @@ export class SearchComponent {
       this.imageInput.nativeElement.value = '';
     } else {
       this.dialog.closeAll();
-      this.router.navigate(['/information'], { state: { foodInfo: this.classifiedFoodData } });
+      sessionStorage.setItem("foodInfo", JSON.stringify(this.classifiedFoodData));
+      this.router.navigate(['/information']);
     }
   }
 }

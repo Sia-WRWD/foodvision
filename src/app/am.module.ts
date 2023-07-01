@@ -16,6 +16,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
     exports: [
@@ -34,7 +35,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatProgressBarModule,
         MatInputModule,
         MatTooltipModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatBadgeModule
     ]
 })
 export class AMModule { }
