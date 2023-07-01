@@ -14,7 +14,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { InformationComponent } from './pages/information/information.component';
 import { AllergyInformationComponent } from './pages/information/allergy-information/allergy-information.component';
-import { FoodInformationComponent } from './pages/information/food-information/food-information.component';
 import { SearchComponent } from './pages/search/search.component';
 import { ImageEditorComponent } from './pages/search/image-editor/image-editor.component';
 
@@ -37,7 +36,6 @@ import { NgxHideOnScrollModule } from 'ngx-hide-on-scroll';
     InformationComponent,
     Error404Component,
     AllergyInformationComponent,
-    FoodInformationComponent,
     SearchComponent,
     ImageEditorComponent,
   ],
