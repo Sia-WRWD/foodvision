@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../shared/shared.service';
 import { faFire, faClockRotateLeft, faCarrot, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
@@ -22,11 +22,14 @@ export class InformationComponent {
   caloriePercentages: any = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private sharedService: SharedService
+    private router: Router
   ) { }
 
   ngOnInit() {
+    if (!sessionStorage.getItem("classifiedFood") && !JSON.parse(sessionStorage.getItem("foodInfo")!)) {
+      this.router.navigate(["/search"]);
+    }
+
     this.getFoodData();
   }
 
