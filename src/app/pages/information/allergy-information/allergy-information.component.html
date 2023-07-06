@@ -1,1 +1,83 @@
-<p>allergy-information works!</p>
+<div class="allergy-modal-container">
+    <div class="allergens-section">
+        <p class="h2 heading">Allergens Detected</p>
+        <ng-container *ngIf="!allergens">
+
+        </ng-container>
+        <ng-container *ngIf="allergens">
+            <div class="d-flex flex-row flex-wrap justify-content-center align-items-center allergens-container">
+                <ng-container *ngFor="let allergen of allergens">
+                    <ng-container *ngIf="allergen == 'Eggs'"> <!--Eggs-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <span class="allergen-text">Eggs</span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="allergen == 'Shellfish'"> <!--Shellfish-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://foodallergiesatlanta.com/wp-content/uploads/2022/08/shellfish-allergy-treatments-in-atlanta1.jpg">
+                            <span class="allergen-text">Shellfish</span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="allergen == 'Wheat'"> <!--Wheat-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <span class="allergen-text">Wheat</span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="allergen == 'Fish'"> <!--Fish-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <span class="allergen-text">Fish</span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="allergen == 'Milk'"> <!--Milk-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <span class="allergen-text">Milk</span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="allergen == 'Sesame'"> <!--Sesame-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <span class="allergen-text">Sesame</span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="allergen == 'Soybeans'"> <!--Soybeans-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <span class="allergen-text">Soybeans</span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="allergen == 'Peanuts'"> <!--Peanuts-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <span class="allergen-text">Peanuts</span>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="allergen == 'Tree-Nuts'"> <!--Tree-Nuts-->
+                        <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
+                            <img class="allergen-img"
+                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <span class="allergen-text">Tree Nuts</span>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+    <div class="allergy-reaction-section">
+        <p class="h2 heading">Symptoms</p>
+    </div>
+    <div class="allergy-treatment-section">
+        <p class="h2 heading">Treatments</p>
+    </div>
+</div>

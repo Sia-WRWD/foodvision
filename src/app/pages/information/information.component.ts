@@ -1,7 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../shared/shared.service';
 import { faFire, faClockRotateLeft, faCarrot, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-information',
@@ -9,20 +10,28 @@ import { faFire, faClockRotateLeft, faCarrot, faTriangleExclamation } from '@for
   styleUrls: ['./information.component.scss']
 })
 export class InformationComponent {
+  @ViewChild('foodImage', { static: false }) foodImage!: ElementRef<HTMLImageElement>;
+  @ViewChild('allergenInfo') allergenInfo!: TemplateRef<any>;
+
   selectedAllergens: string[] = [];
   classifiedFoodData: any;
   classifiedFood: string = "";
-  @ViewChild('foodImage', { static: false }) foodImage!: ElementRef<HTMLImageElement>;
-  faFire = faFire;
-  faClockRotateLeft = faClockRotateLeft;
-  faCarrot = faCarrot;
-  faTriangleExclamation = faTriangleExclamation;
+  matchedAllergens: string[] = [];
+
   badgeText!: string;
   showFullText: boolean = false;
   caloriePercentages: any = [];
 
+  //Fontawesome
+  faFire = faFire;
+  faClockRotateLeft = faClockRotateLeft;
+  faCarrot = faCarrot;
+  faTriangleExclamation = faTriangleExclamation;
+
   constructor(
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog, 
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -37,6 +46,7 @@ export class InformationComponent {
     this.setFoodImage();
     this.setBadgeText();
     this.calFoodCalorie();
+    this.checkFoodAllergens();
   }
 
   getFoodData() {
@@ -52,7 +62,6 @@ export class InformationComponent {
     const foodCroppedImgUrl = sessionStorage.getItem("croppedImage")!;
 
     if (!foodCroppedImgUrl) {
-      console.log(foodImgUrl);
       this.foodImage.nativeElement.setAttribute('src', foodImgUrl);
     } else {
       this.foodImage.nativeElement.setAttribute('src', foodCroppedImgUrl);
@@ -69,28 +78,26 @@ export class InformationComponent {
   checkFoodAllergens() {
     const selectedAllergens = JSON.parse(sessionStorage.getItem('selectedAllergens')!);
     const foodAllergens = this.classifiedFoodData.allergens;
-
+  
     if (selectedAllergens && selectedAllergens.length > 0 && foodAllergens && foodAllergens.length > 0) {
-      const hasMatchingAllergen = foodAllergens.some((allergen: string) => selectedAllergens.includes(allergen));
-
-      if (hasMatchingAllergen) {
-        console.log('At least one selected allergen matches an allergen in the food.');
-        // Perform your desired action for a match
-      } else {
-        console.log('No selected allergens match any allergen in the food.');
-        // Perform your desired action for no match
-      }
+      foodAllergens.forEach((allergen: string) => {
+        if (selectedAllergens.includes(allergen)) {
+          this.matchedAllergens.push(allergen); // Add the matched allergen to the array
+        }
+      });
     }
   }
 
   setBadgeText() {
     if (this.classifiedFoodData.halal == "both") {
-      this.badgeText = "🍲"
+      this.badgeText = "🍲";
     } else if (this.classifiedFoodData.halal == "halal") {
-      this.badgeText = "🍏"
+      this.badgeText = "🍏";
     } else if (this.classifiedFoodData.halal == "not halal") {
       this.badgeText = "🐷";
     }
+    
+    this.cdr.detectChanges(); // Trigger change detection
   }
 
   calFoodCalorie() {
@@ -116,11 +123,13 @@ export class InformationComponent {
     const percentages = valuesToCalculate.map((value: any) => Math.round((value / totalSum) * 100));
   
     this.caloriePercentages = percentages;
+
+    this.cdr.detectChanges();
   }
   
 
   showAllergens() {
-
+    this.dialog.open(this.allergenInfo);
   }
 
   toggleText() {

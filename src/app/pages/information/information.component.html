@@ -1,7 +1,7 @@
 <div class="flex-container">
     <div class="left-container">
         <div class="food-image-container" [matBadge]="badgeText" matBadgeSize="large" matBadgeOverlap="true"
-            matTooltip="{{classifiedFoodData.halal}}" matTooltipPosition="after">
+            matTooltip="halal status: {{classifiedFoodData.halal}}" matTooltipPosition="after">
             <img alt="food-image.jpg" class="food-image" #foodImage>
         </div>
         <div class="food-information-container">
@@ -39,12 +39,41 @@
     <div class="right-container">
         <div class="food-calorie-info">
             <p class="h2">Calorie Info</p>
-            <p class="h3 serving">Serving Size: {{classifiedFoodData.servings}}</p>
+            <p class="h3 serving">Serving Size:
+                <span class="serving-amount-text">{{classifiedFoodData.servings}}</span>
+            </p>
             <div class="calorie-info-progress-chart">
-                <div class="pie total" data-value="100" [attr.data-text]="classifiedFoodData['calorie-info'][0]"></div>
-                <div class="pie carb" [attr.data-value]="caloriePercentages[0]" [attr.data-text]="classifiedFoodData['calorie-info'][1]"></div>
-                <div class="pie protein" [attr.data-value]="caloriePercentages[1]" [attr.data-text]="classifiedFoodData['calorie-info'][2]"></div>
-                <div class="pie fat" [attr.data-value]="caloriePercentages[2]" [attr.data-text]="classifiedFoodData['calorie-info'][3]"></div>
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <div class="pie total" data-value="100" [attr.data-text]="classifiedFoodData['calorie-info'][0]">
+                    </div>
+                    <span class="total-text">
+                        Total Calorie <br/> Values
+                    </span>
+                </div>
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <div class="pie carb" [attr.data-value]="caloriePercentages[0]"
+                        [attr.data-text]="classifiedFoodData['calorie-info'][1]">
+                    </div>
+                    <span class="carb-text">
+                        Carb
+                    </span>
+                </div>
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <div class="pie protein" [attr.data-value]="caloriePercentages[1]"
+                        [attr.data-text]="classifiedFoodData['calorie-info'][2]">
+                    </div>
+                    <span class="protein-text">
+                        Protein
+                    </span>
+                </div>
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <div class="pie fat" [attr.data-value]="caloriePercentages[2]"
+                        [attr.data-text]="classifiedFoodData['calorie-info'][3]">
+                    </div>
+                    <span class="fat-text">
+                        Fat
+                    </span>
+                </div>
             </div>
             <!-- <p class="h3">{{ classifiedFoodData['calorie-info'] }}</p> -->
         </div>
@@ -58,3 +87,9 @@
         </div>
     </div>
 </div>
+
+<ng-template #allergenInfo>
+    <mat-dialog-content class="allergen-dialog">
+        <app-allergy-information [allergens]="matchedAllergens"></app-allergy-information>
+    </mat-dialog-content>
+</ng-template>

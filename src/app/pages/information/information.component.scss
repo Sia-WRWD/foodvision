@@ -25,6 +25,8 @@
     border-radius: 25px;
     height: 300px;
     filter: drop-shadow(1px 2px 3px black);
+    object-fit: cover;
+    cursor: help;
 }
 
 .food-name {
@@ -191,15 +193,19 @@
     text-shadow: none;
     letter-spacing: 1.5px;
     font-size: 1.25rem;
-    color: white;
+    color: var(--lighter-accent);;
     text-shadow: 1px 2px 3px black;
+}
+
+.serving-amount-text {
+    color: white;
 }
 
 .calorie-info-progress-chart {
     display: flex;
     width: 100%;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
 }
 
@@ -214,6 +220,16 @@
     margin: 10px;
     filter: drop-shadow(1px 2px 3px black);
     color: var(--black2white);
+    text-align: center;
+}
+
+.total-text, .carb-text, .protein-text, .fat-text {
+    font-weight: 700;
+    letter-spacing: 1.25px;
+    color: white;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
 }
 
 .carb {
@@ -236,6 +252,7 @@
     border-radius: 0 100% 100% 0 / 50%;
     background-color: inherit;
     transform-origin: left;
+    margin-bottom: 7px;
 }
 
 .pie::after {
