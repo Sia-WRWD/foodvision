@@ -4,8 +4,32 @@
     background: #eeeeee;
 }
 
+.no-allergen-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.check-mark {
+    font-size: 10rem !important;
+    color: #34b233;
+    height: 100% !important;
+    width: 100% !important;
+    text-shadow: 1px 2px 3px black;
+}
+
+.no-allergen-container .h3 {
+    text-shadow: 1px 2px 3px black;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--lighter-primary);
+}
+
 .allergens-container {
     column-gap: 15px;
+    row-gap: 15px;
 }
 
 .allergen-container {
@@ -24,13 +48,15 @@
     text-decoration: underline;
     text-underline-position: under;
     line-height: 1.5;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .allergen-img {
     width: 250px;
     height: 250px;
     border-radius: 50%;
-    margin: 7px;
+    object-fit: cover;
 }
 
 .allergen-text {
@@ -41,6 +67,57 @@
     text-transform: uppercase;
     color: var(--accent);
     text-shadow: 1px 2px 3px black;
+}
+
+.reaction-treatment {
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    row-gap: 15px;
+    width: 100%;
+}
+
+.allergy-reaction-section, .allergy-treatment-section {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.btnSymptoms {
+    background: var(--lighter-accent);
+    color: white;
+    text-shadow: 1px 2px 3px black;
+    width: fit-content;
+}
+
+.allergy-reaction-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.symptom-img {
+    height: 250px;
+    width: 250px;
+    border-radius: 25%;
+    filter: drop-shadow(1px 2px 3px black);
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.symptom-name {
+    font-weight: 800;
+    text-shadow: 1px 2px 3px black;
+    color: var(--lighter-primary);
+    letter-spacing: 1px;
+}
+
+.symptom-desc {
+    font-weight: normal;
+    line-height: 1.5;
+    color: black;
+    margin: 0;
+    text-align: center;
 }
 
 @media screen and (max-width: 991px) {
@@ -55,9 +132,17 @@
         width: 175px !important;
         height: 175px !important;
     }
+
+    .reaction-treatment {
+        flex-direction: column !important;
+    }
+
+    .allergy-reaction-section, .allergy-treatment-section {
+        width: 100% !important;
+    }
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 613px) {
     .allergen-img {
         width: 150px !important;
         height: 150px !important;
@@ -68,20 +153,40 @@
     }
 }
 
-@media screen and (max-width: 483px) {
+@media screen and (max-width: 516px) {
     .allergen-img {
         width: 125px !important;
         height: 125px !important;
     }
+
+    .allergen-dialog {
+        padding: 15px;
+    }
 }
 
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 453px) {
     .allergen-img {
         width: 200px !important;
         height: 200px !important;
     }
 
-    .allergens-container {
-        row-gap: 15px;
+    .symptom-img {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .symptom-name {
+        font-size: 1.5rem;
+    }
+
+    .symptom-desc {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 359px) {
+    .allergen-img {
+        width: 175px !important;
+        height: 175px !important;
     }
 }

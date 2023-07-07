@@ -2,7 +2,10 @@
     <div class="allergens-section">
         <p class="h2 heading">Allergens Detected</p>
         <ng-container *ngIf="!allergens">
-
+            <div class="no-allergen-container">
+                <mat-icon class="check-mark">check_circle_outline</mat-icon>
+                <p class="h3">No Allergens Detected, Safe for Consumption!</p>
+            </div>
         </ng-container>
         <ng-container *ngIf="allergens">
             <div class="d-flex flex-row flex-wrap justify-content-center align-items-center allergens-container">
@@ -24,49 +27,48 @@
                     <ng-container *ngIf="allergen == 'Wheat'"> <!--Wheat-->
                         <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
                             <img class="allergen-img"
-                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                                src="https://www.bakingbusiness.com/ext/resources/2022/05/17/crop-progress_wheat_AdobeStock_LEAD.jpeg?height=667&t=1661184953&width=1080">
                             <span class="allergen-text">Wheat</span>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="allergen == 'Fish'"> <!--Fish-->
                         <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
                             <img class="allergen-img"
-                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                                src="https://www.iafaforallergy.com/wp-content/uploads/2020/08/Fish-Allergy-2.jpg">
                             <span class="allergen-text">Fish</span>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="allergen == 'Milk'"> <!--Milk-->
                         <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
                             <img class="allergen-img"
-                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                                src="https://hips.hearstapps.com/hmg-prod/images/health-benefits-of-goat-milk-1586900792.jpg?crop=0.668xw:1.00xh;0.259xw,0&resize=1200:*">
                             <span class="allergen-text">Milk</span>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="allergen == 'Sesame'"> <!--Sesame-->
                         <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
                             <img class="allergen-img"
-                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                                src="https://domf5oio6qrcr.cloudfront.net/medialibrary/6195/17f1f1f9-da43-405a-b3b4-4d1fcb5cec51.jpg">
                             <span class="allergen-text">Sesame</span>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="allergen == 'Soybeans'"> <!--Soybeans-->
                         <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
                             <img class="allergen-img"
-                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                                src="https://www.poultryworld.net/app/uploads/2023/06/IMG_Soybeans4-Canva.jpg">
                             <span class="allergen-text">Soybeans</span>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="allergen == 'Peanuts'"> <!--Peanuts-->
                         <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
-                            <img class="allergen-img"
-                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                            <img class="allergen-img" src="https://static.toiimg.com/photo/61819640.cms">
                             <span class="allergen-text">Peanuts</span>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="allergen == 'Tree-Nuts'"> <!--Tree-Nuts-->
                         <div class="d-flex flex-column justify-content-center align-items-center allergen-container">
                             <img class="allergen-img"
-                                src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg">
+                                src="https://www.lilmixins.com/cdn/shop/articles/tree_nuts_3_1024x1024.jpg?v=1611863316">
                             <span class="allergen-text">Tree Nuts</span>
                         </div>
                     </ng-container>
@@ -74,10 +76,48 @@
             </div>
         </ng-container>
     </div>
-    <div class="allergy-reaction-section">
-        <p class="h2 heading">Symptoms</p>
-    </div>
-    <div class="allergy-treatment-section">
-        <p class="h2 heading">Treatments</p>
+    <div class="reaction-treatment">
+        <div class="allergy-reaction-section mt-3">
+            <p class="h2 heading">Symptoms</p>
+            <button mat-raised-button class="mb-3 btnSymptoms" [matMenuTriggerFor]="symptomMenu" yPosition="above">
+                Symptoms <mat-icon>more_vert</mat-icon>
+            </button>
+            <div class="allergy-reaction-content">
+                <img [src]="selectedSymptom.img" class="symptom-img">
+                <p class="h2 symptom-name">
+                    {{selectedSymptom.name}}
+                    <span class="symptom-threat-level" matTooltip="{{selectedSymptom.threatLevel}} Threat">
+                        <ng-container *ngIf="selectedSymptom.threatLevel == 'High'">
+                            ❗
+                        </ng-container>
+                        <ng-container *ngIf="selectedSymptom.threatLevel == 'Moderate'">
+                            ⚠️
+                        </ng-container>
+                        <ng-container *ngIf="selectedSymptom.threatLevel == 'Low'">
+                            ✅
+                        </ng-container>
+                    </span>
+                </p>
+                <p class="h3 symptom-desc">{{selectedSymptom.description}}</p>
+            </div>
+        </div>
+        <div class="allergy-treatment-section my-3">
+            <p class="h2 heading">Treatments</p>
+            <button mat-raised-button class="mb-3 btnSymptoms" [matMenuTriggerFor]="treatmentMenu" yPosition="above">
+                Treatments <mat-icon>more_vert</mat-icon>
+            </button>
+        </div>
     </div>
 </div>
+
+<mat-menu #symptomMenu="matMenu">
+    <ng-container *ngFor="let symptom of symptoms; let i = index">
+        <button mat-menu-item (click)="displaySymptom(i)">{{symptom.name}}</button>
+    </ng-container>
+</mat-menu>
+
+<mat-menu #treatmentMenu="matMenu">
+    <ng-container *ngFor="let symptom of symptoms; let i = index">
+        <button mat-menu-item (click)="displaySymptom(i)">{{symptom.name}}</button>
+    </ng-container>
+</mat-menu>

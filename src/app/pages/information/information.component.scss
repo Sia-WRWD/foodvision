@@ -305,6 +305,10 @@
     }
 }
 
+mat-dialog-container {
+    width: 50vw !important;
+}
+
 //Responsive
 @media screen and (min-width: 992px) and (max-width: 1399px) {
     .left-container {
@@ -325,6 +329,12 @@
         &::after {
             font-size: 1rem;
         }
+    }
+}
+
+@media screen and (max-width: 1281px) {
+    mat-dialog-container {
+        width: 100vw !important;
     }
 }
 
