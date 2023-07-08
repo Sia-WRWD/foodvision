@@ -23,11 +23,13 @@ export class AllergyInformationComponent {
   selectedSymptom: any;
   treatments: any =
     [
-      { name: "Adrenaline Injection", img: "", description: "" },
-      { name: "Antihistamines", img: "", description: "" },
-      { name: "Corticosteroids", img: "", description: "" },
-      { name: "Supportive Care", img: "", description: "" }
-    ];
+      { name: "Adrenaline Injection", img: "../../../../assets/symptom-img/adrenaline-injection.jpg", description: "First-line treatment for severe allergic reactions." },
+      { name: "Antihistamines", img: "../../../../assets/symptom-img/antihistamine.jpg", description: "Relieves mild to moderate allergic symptoms." },
+      { name: "Corticosteroids", img: "../../../../assets/symptom-img/corticosteroid.jpg", description: "Reduces inflammation and suppresses immune response." },
+      { name: "Emergency Services", img: "../../../../assets/symptom-img/emergency-services.jpg", description: "Requesting for immediate assistance from emergency medical services." }
+    ]
+
+
   selectedTreatment: any;
 
 

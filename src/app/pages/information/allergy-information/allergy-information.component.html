@@ -106,6 +106,13 @@
             <button mat-raised-button class="mb-3 btnSymptoms" [matMenuTriggerFor]="treatmentMenu" yPosition="above">
                 Treatments <mat-icon>more_vert</mat-icon>
             </button>
+            <div class="allergy-treatment-content">
+                <img [src]="selectedTreatment.img" class="symptom-img">
+                <p class="h2 symptom-name">
+                    {{selectedTreatment.name}}
+                </p>
+                <p class="h3 symptom-desc">{{selectedTreatment.description}}</p>
+            </div>
         </div>
     </div>
 </div>
@@ -117,7 +124,7 @@
 </mat-menu>
 
 <mat-menu #treatmentMenu="matMenu">
-    <ng-container *ngFor="let symptom of symptoms; let i = index">
-        <button mat-menu-item (click)="displaySymptom(i)">{{symptom.name}}</button>
+    <ng-container *ngFor="let treatment of treatments; let i = index">
+        <button mat-menu-item (click)="displayTreatment(i)">{{treatment.name}}</button>
     </ng-container>
 </mat-menu>

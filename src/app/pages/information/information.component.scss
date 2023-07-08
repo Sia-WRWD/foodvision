@@ -305,7 +305,7 @@
     }
 }
 
-mat-dialog-container {
+mat-dialog-content {
     width: 50vw !important;
 }
 
@@ -333,8 +333,8 @@ mat-dialog-container {
 }
 
 @media screen and (max-width: 1281px) {
-    mat-dialog-container {
-        width: 100vw !important;
+    mat-dialog-content {
+        width: 100% !important;
     }
 }
 
