@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./google-translator.component.scss']
 })
 export class GoogleTranslatorComponent {
+  languagesToInclude: string = "";
+  defaultLanguage: string = "en";
+
+  constructor() {}
 
 }

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './components/footer/footer.component';
 import { GoogleTranslatorComponent } from './components/google-translator/google-translator.component';
 import { AMModule } from 'src/app/am.module';
+import { AGoogTransModule } from 'a-goog-trans';
 
 
 
@@ -17,7 +18,8 @@ import { AMModule } from 'src/app/am.module';
       FormsModule,
       ReactiveFormsModule,
       CommonModule,
-      AMModule
+      AMModule,
+      AGoogTransModule
     ],
     exports: [
       FooterComponent,

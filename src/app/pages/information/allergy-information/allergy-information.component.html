@@ -83,22 +83,69 @@
                 Symptoms <mat-icon>more_vert</mat-icon>
             </button>
             <div class="allergy-reaction-content">
-                <img [src]="selectedSymptom.img" class="symptom-img">
-                <p class="h2 symptom-name">
-                    {{selectedSymptom.name}}
-                    <span class="symptom-threat-level" matTooltip="{{selectedSymptom.threatLevel}} Threat">
-                        <ng-container *ngIf="selectedSymptom.threatLevel == 'High'">
-                            ❗
-                        </ng-container>
-                        <ng-container *ngIf="selectedSymptom.threatLevel == 'Moderate'">
-                            ⚠️
-                        </ng-container>
-                        <ng-container *ngIf="selectedSymptom.threatLevel == 'Low'">
-                            ✅
-                        </ng-container>
-                    </span>
-                </p>
-                <p class="h3 symptom-desc">{{selectedSymptom.description}}</p>
+                <ng-container *ngIf="selectedSymptom === symptoms[0].name"> <!--Symptom 1-->
+                    <img [src]="symptoms[0].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[0].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[0].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedSymptom === symptoms[1].name"> <!--Symptom 2-->
+                    <img [src]="symptoms[1].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[1].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[1].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedSymptom === symptoms[2].name"> <!--Symptom 3-->
+                    <img [src]="symptoms[2].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[2].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[2].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedSymptom === symptoms[3].name"> <!--Symptom 4-->
+                    <img [src]="symptoms[3].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[3].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[3].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedSymptom === symptoms[4].name"> <!--Symptom 5-->
+                    <img [src]="symptoms[4].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[4].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[4].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedSymptom === symptoms[5].name"> <!--Symptom 6-->
+                    <img [src]="symptoms[5].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[5].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[5].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedSymptom === symptoms[6].name"> <!--Symptom 7-->
+                    <img [src]="symptoms[6].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[6].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[6].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedSymptom === symptoms[7].name"> <!--Symptom 8-->
+                    <img [src]="symptoms[7].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[7].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[7].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedSymptom === symptoms[8].name"> <!--Symptom 9-->
+                    <img [src]="symptoms[8].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{symptoms[8].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{symptoms[8].description}}</p>
+                </ng-container>
             </div>
         </div>
         <div class="allergy-treatment-section my-3">
@@ -107,24 +154,47 @@
                 Treatments <mat-icon>more_vert</mat-icon>
             </button>
             <div class="allergy-treatment-content">
-                <img [src]="selectedTreatment.img" class="symptom-img">
-                <p class="h2 symptom-name">
-                    {{selectedTreatment.name}}
-                </p>
-                <p class="h3 symptom-desc">{{selectedTreatment.description}}</p>
+                <ng-container *ngIf="selectedTreatment === treatments[0].name"> <!--Treatment 1-->
+                    <img [src]="treatments[0].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{treatments[0].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{treatments[1].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedTreatment === treatments[1].name"> <!--Treatment 2-->
+                    <img [src]="treatments[1].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{treatments[1].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{treatments[1].description}}</p>
+                </ng-container>
+                <ng-container *ngIf="selectedTreatment === treatments[2].name"> <!--Treatment 3-->
+                    <img [src]="treatments[2].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{treatments[2].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{treatments[2].description}}</p> <!--Treatment 4-->
+                </ng-container>
+                <ng-container *ngIf="selectedTreatment === treatments[3].name">
+                    <img [src]="treatments[3].img" class="symptom-img">
+                    <p class="h2 symptom-name">
+                        {{treatments[3].name}}
+                    </p>
+                    <p class="h3 symptom-desc">{{treatments[3].description}}</p>
+                </ng-container>
             </div>
         </div>
     </div>
 </div>
 
 <mat-menu #symptomMenu="matMenu">
-    <ng-container *ngFor="let symptom of symptoms; let i = index">
-        <button mat-menu-item (click)="displaySymptom(i)">{{symptom.name}}</button>
+    <ng-container *ngFor="let symptom of symptoms">
+        <button mat-menu-item (click)="displaySymptom(symptom.name)">{{symptom.name}}</button>
     </ng-container>
 </mat-menu>
 
 <mat-menu #treatmentMenu="matMenu">
-    <ng-container *ngFor="let treatment of treatments; let i = index">
-        <button mat-menu-item (click)="displayTreatment(i)">{{treatment.name}}</button>
+    <ng-container *ngFor="let treatment of treatments">
+        <button mat-menu-item (click)="displayTreatment(treatment.name)">{{treatment.name}}</button>
     </ng-container>
 </mat-menu>

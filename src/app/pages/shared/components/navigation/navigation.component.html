@@ -3,7 +3,7 @@
     [mode]="(isHandset$ | async) ? 'over' : 'over'" [opened]="false">
     <mat-toolbar>
       <div class="glowy-title" title="FoodVision">
-        <a class="mobile-title" routerLink="">FoodVision</a>
+        <a class="mobile-title notranslate" routerLink="">FoodVision</a>
       </div>
     </mat-toolbar>
   </mat-sidenav>
@@ -17,7 +17,7 @@
         </button>
         <!--Desktop Left Nav-->
         <div class="glowy-title" title="FoodVision">
-          <a class="title" routerLink="">FoodVision</a>
+          <a class="title notranslate" routerLink="">FoodVision</a>
         </div>
         <div class="flex-stretch"></div>
 
@@ -33,3 +33,5 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<app-google-translator></app-google-translator>

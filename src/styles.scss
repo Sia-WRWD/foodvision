@@ -64,7 +64,11 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: "Calibre", "Inter", "San Francisco", "SF Pro Text", -apple-system, system-ui, sans-serif; }
+body { 
+  margin: 0; 
+  font-family: "Calibre", "Inter", "San Francisco", "SF Pro Text", -apple-system, system-ui, sans-serif;
+  top: 0 !important;
+ }
 
 .mr-8 {
     margin-right: 8px !important;
@@ -167,4 +171,8 @@ h4 {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
+}
+
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+  display: none !important;
 }

@@ -27,6 +27,7 @@ import { environment } from './environments/environment';
 
 //Other Libraries
 import { NgxHideOnScrollModule } from 'ngx-hide-on-scroll';
+import { AGoogTransModule } from 'a-goog-trans';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { NgxHideOnScrollModule } from 'ngx-hide-on-scroll';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    AGoogTransModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
