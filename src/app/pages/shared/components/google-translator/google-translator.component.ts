@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class GoogleTranslatorComponent {
   languagesToInclude: string = "";
   defaultLanguage: string = "en";
+  domainName: string = "foodvision-5132c.web.app"; //domainName: For Development === "localhost" || For Production === ".foodvision-5132c.web.app"
 
   constructor() {}
 
