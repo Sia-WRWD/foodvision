@@ -28,25 +28,53 @@ export class InformationComponent {
   faCarrot = faCarrot;
   faTriangleExclamation = faTriangleExclamation;
 
+  //Sharing Function Variables
+  sharedParam: boolean = false;
+  foodParam: string = "";
+
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     public dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit() {
-    if (!sessionStorage.getItem("classifiedFood") && !JSON.parse(sessionStorage.getItem("foodInfo")!)) {
-      this.router.navigate(["/search"]);
-    }
+    this.route.queryParams.subscribe(params => {
+      this.sharedParam = params.hasOwnProperty('shared');
+      this.foodParam = params['food'] || null;
+      this.classifiedFoodData = {};
 
-    this.getFoodData();
+      if (this.sharedParam) {
+        this.foodParam = this.foodParam.replace(/_/g, '-');
+        this.sharedService.getFoodInfo(this.foodParam).subscribe((data: any) => {
+          this.classifiedFoodData = data;
+          this.calFoodCalorie();
+        });
+        this.classifiedFood = this.foodParam
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+      } else {
+        if (!sessionStorage.getItem("classifiedFood") && !JSON.parse(sessionStorage.getItem("foodInfo")!)) {
+          this.router.navigate(["/search"]);
+        }
+
+        this.getFoodData();
+      }
+    })
   }
 
   ngAfterViewInit() {
-    this.setFoodImage();
+    if (this.sharedParam) {
+      this.setFoodImage(true, this.foodParam);
+      this.checkFoodAllergens(true);
+    } else {
+      this.setFoodImage(false, "");
+      this.checkFoodAllergens(false);
+    }
     this.setBadgeText();
-    this.calFoodCalorie();
-    this.checkFoodAllergens();
   }
 
   getFoodData() {
@@ -57,10 +85,16 @@ export class InformationComponent {
     this.classifiedFood = this.classifiedFood.replace(/"/g, '');
   }
 
-  setFoodImage() {
-    const foodImgUrl = sessionStorage.getItem("originalImage")!;
+  setFoodImage(shared: boolean, foodName: string) {
+    if (shared === true) {
+      const foodImgUrl = "../../../assets/shared-food-image/" + foodName + ".jpg";
 
-    this.foodImage.nativeElement.setAttribute('src', foodImgUrl);
+      this.foodImage.nativeElement.setAttribute('src', foodImgUrl);
+    } else {
+      const foodImgUrl = sessionStorage.getItem("originalImage")!;
+
+      this.foodImage.nativeElement.setAttribute('src', foodImgUrl);
+    }
   }
 
   loadSelectedAllergens(): void {
@@ -70,16 +104,20 @@ export class InformationComponent {
     }
   }
 
-  checkFoodAllergens() {
-    const selectedAllergens = JSON.parse(sessionStorage.getItem('selectedAllergens')!);
-    const foodAllergens = this.classifiedFoodData.allergens;
+  checkFoodAllergens(shared: boolean) {
+    if (shared === true) {
+      this.matchedAllergens = this.classifiedFoodData.allergens;
+    } else {
+      const selectedAllergens = JSON.parse(sessionStorage.getItem('selectedAllergens')!);
+      const foodAllergens = this.classifiedFoodData.allergens;
 
-    if (selectedAllergens && selectedAllergens.length > 0 && foodAllergens && foodAllergens.length > 0) {
-      foodAllergens.forEach((allergen: string) => {
-        if (selectedAllergens.includes(allergen)) {
-          this.matchedAllergens.push(allergen); // Add the matched allergen to the array
-        }
-      });
+      if (selectedAllergens && selectedAllergens.length > 0 && foodAllergens && foodAllergens.length > 0) {
+        foodAllergens.forEach((allergen: string) => {
+          if (selectedAllergens.includes(allergen)) {
+            this.matchedAllergens.push(allergen); // Add the matched allergen to the array
+          }
+        });
+      }
     }
   }
 
@@ -102,20 +140,20 @@ export class InformationComponent {
     const pattern = /[0-9.]+/;
 
     // Extract numerical values and round them off
-    const roundedValues = values.map((value: any) => {
+    const roundedValues = values?.map((value: any) => {
       const numericString = value.match(pattern)[0];
       const numericValue = parseFloat(numericString);
       return Math.round(numericValue);
     });
 
     // Retrieve the second to fourth values
-    const valuesToCalculate = roundedValues.slice(1, 4);
+    const valuesToCalculate = roundedValues?.slice(1, 4);
 
     // Calculate the total sum
-    const totalSum = valuesToCalculate.reduce((sum: any, value: any) => sum + value, 0);
+    const totalSum = valuesToCalculate?.reduce((sum: any, value: any) => sum + value, 0);
 
     // Calculate the percentages
-    const percentages = valuesToCalculate.map((value: any) => Math.round((value / totalSum) * 100));
+    const percentages = valuesToCalculate?.map((value: any) => Math.round((value / totalSum) * 100));
 
     this.caloriePercentages = percentages;
 

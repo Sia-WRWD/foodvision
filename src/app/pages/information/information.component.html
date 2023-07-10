@@ -15,17 +15,17 @@
                 <p class="h3">{{classifiedFoodData.ingredients}}</p>
             </div>
             <div class="food-source">
-                <button mat-raised-button class="btnSource" matTooltip="Recipe">
+                <button mat-raised-button class="btnSource" matTooltip="Recipe" *ngIf="classifiedFoodData?.source?.[0]">
                     <a href="{{classifiedFoodData.source[0]}}" target="_blank">
                         <fa-icon [icon]="faCarrot"></fa-icon>
                     </a>
                 </button>
-                <button mat-raised-button class="btnSource" matTooltip="History">
+                <button mat-raised-button class="btnSource" matTooltip="History" *ngIf="classifiedFoodData?.source?.[1]">
                     <a href="{{classifiedFoodData.source[1]}}" target="_blank">
                         <fa-icon [icon]="faClockRotateLeft"></fa-icon>
                     </a>
                 </button>
-                <button mat-raised-button class="btnSource" matTooltip="Calorie Info">
+                <button mat-raised-button class="btnSource" matTooltip="Calorie Info" *ngIf="classifiedFoodData?.source?.[2]">
                     <a href="{{classifiedFoodData.source[2]}}" target="_blank">
                         <fa-icon [icon]="faFire"></fa-icon>
                     </a>
@@ -44,31 +44,31 @@
             </p>
             <div class="calorie-info-progress-chart">
                 <div class="d-flex justify-content-center align-items-center flex-column">
-                    <div class="pie total" data-value="100" [attr.data-text]="classifiedFoodData['calorie-info'][0]">
+                    <div class="pie total" data-value="100" [attr.data-text]="classifiedFoodData['calorie-info']?.[0]">
                     </div>
                     <span class="total-text">
                         Total Calorie <br/> Values
                     </span>
                 </div>
                 <div class="d-flex justify-content-center align-items-center flex-column">
-                    <div class="pie carb" [attr.data-value]="caloriePercentages[0]"
-                        [attr.data-text]="classifiedFoodData['calorie-info'][1]">
+                    <div class="pie carb" [attr.data-value]="caloriePercentages?.[0]"
+                        [attr.data-text]="classifiedFoodData['calorie-info']?.[1]">
                     </div>
                     <span class="carb-text">
                         Carb
                     </span>
                 </div>
                 <div class="d-flex justify-content-center align-items-center flex-column">
-                    <div class="pie protein" [attr.data-value]="caloriePercentages[1]"
-                        [attr.data-text]="classifiedFoodData['calorie-info'][2]">
+                    <div class="pie protein" [attr.data-value]="caloriePercentages?.[1]"
+                        [attr.data-text]="classifiedFoodData['calorie-info']?.[2]">
                     </div>
                     <span class="protein-text">
                         Protein
                     </span>
                 </div>
                 <div class="d-flex justify-content-center align-items-center flex-column">
-                    <div class="pie fat" [attr.data-value]="caloriePercentages[2]"
-                        [attr.data-text]="classifiedFoodData['calorie-info'][3]">
+                    <div class="pie fat" [attr.data-value]="caloriePercentages?.[2]"
+                        [attr.data-text]="classifiedFoodData['calorie-info']?.[3]">
                     </div>
                     <span class="fat-text">
                         Fat
