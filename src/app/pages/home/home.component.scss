@@ -97,9 +97,19 @@
 }
 
 //Responsive
+@media screen and (max-width: 1399px) {
+    .logo-container {
+        column-gap: 20px !important;
+    }
+}
+
 @media screen and (max-width: 1199px) {
     .app-preview-image {
         width: 100% !important;
+    }
+
+    .logo-container {
+        column-gap: 0px !important;
     }
 
     .logo-image {
@@ -129,7 +139,7 @@
     .logo-container {
         margin: auto;
         margin-bottom: 1rem;
-        column-gap: 20px;
+        column-gap: 20px !important;
     }
 
     .logo-image {
