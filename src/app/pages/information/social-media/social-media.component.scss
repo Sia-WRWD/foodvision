@@ -1,0 +1,59 @@
+.social-media-container {
+    position: fixed;
+    bottom: 215px;
+    right: 23px;
+    height: 50px;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 25px;
+    align-items: center;
+    box-shadow: 0 3px 12px #00000026;
+    width: 50px;
+    transition: all .3s;
+    column-gap: 5px;
+    justify-content: center;
+}
+
+.share-logo-icon {
+    font-size: 1.2rem;
+    color: var(--primary);
+    filter: drop-shadow(1px 2px 1px black);
+}
+
+.social-media-share-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.social-media-icon {
+    font-size: 1.5rem;
+    filter: drop-shadow(1px 2px 1px black);
+}
+
+.fa-fb {
+    background: #1778F2;
+}
+
+.fa-tw {
+    background: #1DA1F2;
+}
+
+.fa-wa {
+    background: #4FCE5D;
+}
+
+::ng-deep .mdc-button {
+    min-width: 0 !important;
+}
+
+.social-media-btn {
+    width: fit-content;
+    padding: 0px 15px;
+    border-radius: 7px;
+    color: white;
+}

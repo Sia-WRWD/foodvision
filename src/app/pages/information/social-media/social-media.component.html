@@ -1,0 +1,18 @@
+<div class="social-media-container" id="smc">
+    <div class="share-logo-container" (click)="showHideButtons()" matTooltip="Share to Social Media">
+        <fa-icon [icon]="faShareFromSquare" class="share-logo-icon"></fa-icon>
+    </div>
+    <ng-container *ngIf="isShowButtons == true">
+        <div class="social-media-share-buttons">
+            <button mat-raised-button class="social-media-btn fa-fb" (click)="shareFacebook()">
+                <fa-icon [icon]="faFacebook" class="social-media-icon"></fa-icon>
+            </button>
+            <button mat-raised-button class="social-media-btn fa-tw" (click)="shareTwitter()">
+                <fa-icon [icon]="faTwitter" class="social-media-icon"></fa-icon>
+            </button>
+            <button mat-raised-button class="social-media-btn fa-wa" (click)="shareWhatsapp()">
+                <fa-icon [icon]="faWhatsapp" class="social-media-icon"></fa-icon>
+            </button>
+        </div>
+    </ng-container>
+</div>

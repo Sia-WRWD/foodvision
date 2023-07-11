@@ -1,8 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../shared/shared.service';
 import { faFire, faClockRotateLeft, faCarrot, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Meta } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
+
 
 @Component({
   selector: 'app-information',
@@ -37,31 +40,35 @@ export class InformationComponent {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private meta: Meta,
+    @Inject(DOCUMENT) private document: Document
   ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.sharedParam = params.hasOwnProperty('shared');
       this.foodParam = params['food'] || null;
-      this.classifiedFoodData = {};
 
-      if (this.sharedParam) {
+      if (this.sharedParam) { //If Shared is true.
         this.foodParam = this.foodParam.replace(/_/g, '-');
         this.sharedService.getFoodInfo(this.foodParam).subscribe((data: any) => {
           this.classifiedFoodData = data;
           this.calFoodCalorie();
+          this.checkFoodAllergens(true);
+          this.setBadgeText();
         });
         this.classifiedFood = this.foodParam
           .split('-')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
-      } else {
+      } else { //If not shared, but classified.
         if (!sessionStorage.getItem("classifiedFood") && !JSON.parse(sessionStorage.getItem("foodInfo")!)) {
           this.router.navigate(["/search"]);
         }
 
         this.getFoodData();
+        this.calFoodCalorie();
       }
     })
   }
@@ -69,12 +76,11 @@ export class InformationComponent {
   ngAfterViewInit() {
     if (this.sharedParam) {
       this.setFoodImage(true, this.foodParam);
-      this.checkFoodAllergens(true);
     } else {
       this.setFoodImage(false, "");
       this.checkFoodAllergens(false);
+      this.setBadgeText();
     }
-    this.setBadgeText();
   }
 
   getFoodData() {
@@ -105,7 +111,7 @@ export class InformationComponent {
   }
 
   checkFoodAllergens(shared: boolean) {
-    if (shared === true) {
+    if (shared == true) {
       this.matchedAllergens = this.classifiedFoodData.allergens;
     } else {
       const selectedAllergens = JSON.parse(sessionStorage.getItem('selectedAllergens')!);
@@ -122,11 +128,11 @@ export class InformationComponent {
   }
 
   setBadgeText() {
-    if (this.classifiedFoodData.halal == "both") {
+    if (this.classifiedFoodData?.halal == "both") {
       this.badgeText = "🍲";
-    } else if (this.classifiedFoodData.halal == "halal") {
+    } else if (this.classifiedFoodData?.halal == "halal") {
       this.badgeText = "🍏";
-    } else if (this.classifiedFoodData.halal == "not halal") {
+    } else if (this.classifiedFoodData?.halal == "not halal") {
       this.badgeText = "🐷";
     }
 

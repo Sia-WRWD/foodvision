@@ -1,7 +1,7 @@
 <div class="flex-container">
     <div class="left-container">
         <div class="food-image-container" [matBadge]="badgeText" matBadgeSize="large" matBadgeOverlap="true"
-            matTooltip="halal status: {{classifiedFoodData.halal}}" matTooltipPosition="after">
+            matTooltip="halal status: {{classifiedFoodData?.halal}}" matTooltipPosition="after">
             <img alt="food-image.jpg" class="food-image" #foodImage>
         </div>
         <div class="food-information-container">
@@ -9,10 +9,10 @@
                 <p class="h2">{{classifiedFood}}</p>
             </div>
             <div class="food-origin">
-                <p class="h4">{{classifiedFoodData.origin}}</p>
+                <p class="h4">{{classifiedFoodData?.origin}}</p>
             </div>
             <div class="food-ingredients">
-                <p class="h3">{{classifiedFoodData.ingredients}}</p>
+                <p class="h3">{{classifiedFoodData?.ingredients}}</p>
             </div>
             <div class="food-source">
                 <button mat-raised-button class="btnSource" matTooltip="Recipe" *ngIf="classifiedFoodData?.source?.[0]">
@@ -20,12 +20,14 @@
                         <fa-icon [icon]="faCarrot"></fa-icon>
                     </a>
                 </button>
-                <button mat-raised-button class="btnSource" matTooltip="History" *ngIf="classifiedFoodData?.source?.[1]">
+                <button mat-raised-button class="btnSource" matTooltip="History"
+                    *ngIf="classifiedFoodData?.source?.[1]">
                     <a href="{{classifiedFoodData.source[1]}}" target="_blank">
                         <fa-icon [icon]="faClockRotateLeft"></fa-icon>
                     </a>
                 </button>
-                <button mat-raised-button class="btnSource" matTooltip="Calorie Info" *ngIf="classifiedFoodData?.source?.[2]">
+                <button mat-raised-button class="btnSource" matTooltip="Calorie Info"
+                    *ngIf="classifiedFoodData?.source?.[2]">
                     <a href="{{classifiedFoodData.source[2]}}" target="_blank">
                         <fa-icon [icon]="faFire"></fa-icon>
                     </a>
@@ -40,19 +42,20 @@
         <div class="food-calorie-info">
             <p class="h2">Calorie Info</p>
             <p class="h3 serving">Serving Size:
-                <span class="serving-amount-text">{{classifiedFoodData.servings}}</span>
+                <span class="serving-amount-text">{{classifiedFoodData?.servings}}</span>
             </p>
             <div class="calorie-info-progress-chart">
                 <div class="d-flex justify-content-center align-items-center flex-column">
-                    <div class="pie total" data-value="100" [attr.data-text]="classifiedFoodData['calorie-info']?.[0]">
+                    <div class="pie total" data-value="100"
+                        [attr.data-text]="classifiedFoodData?.['calorie-info']?.[0]">
                     </div>
                     <span class="total-text">
-                        Total Calorie <br/> Values
+                        Total Calorie <br /> Values
                     </span>
                 </div>
                 <div class="d-flex justify-content-center align-items-center flex-column">
                     <div class="pie carb" [attr.data-value]="caloriePercentages?.[0]"
-                        [attr.data-text]="classifiedFoodData['calorie-info']?.[1]">
+                        [attr.data-text]="classifiedFoodData?.['calorie-info']?.[1]">
                     </div>
                     <span class="carb-text">
                         Carb
@@ -60,7 +63,7 @@
                 </div>
                 <div class="d-flex justify-content-center align-items-center flex-column">
                     <div class="pie protein" [attr.data-value]="caloriePercentages?.[1]"
-                        [attr.data-text]="classifiedFoodData['calorie-info']?.[2]">
+                        [attr.data-text]="classifiedFoodData?.['calorie-info']?.[2]">
                     </div>
                     <span class="protein-text">
                         Protein
@@ -68,7 +71,7 @@
                 </div>
                 <div class="d-flex justify-content-center align-items-center flex-column">
                     <div class="pie fat" [attr.data-value]="caloriePercentages?.[2]"
-                        [attr.data-text]="classifiedFoodData['calorie-info']?.[3]">
+                        [attr.data-text]="classifiedFoodData?.['calorie-info']?.[3]">
                     </div>
                     <span class="fat-text">
                         Fat
@@ -80,7 +83,7 @@
         <div class="food-history">
             <p class="h2">Food History</p>
             <p class="h3 my-0" [ngClass]="{'expanded': showFullText}">
-                {{classifiedFoodData.history}}
+                {{classifiedFoodData?.history}}
             </p>
             <a *ngIf="!showFullText" (click)="toggleText()" class="more-link">Show More ▼</a>
             <a *ngIf="showFullText" (click)="toggleText()" class="less-link">Show Lesser ▲</a>
@@ -93,3 +96,7 @@
         <app-allergy-information [allergens]="matchedAllergens"></app-allergy-information>
     </mat-dialog-content>
 </ng-template>
+
+<ng-container *ngIf="classifiedFoodData && classifiedFood">
+    <app-social-media [foodData]="classifiedFoodData" [foodName]="classifiedFood"></app-social-media>
+</ng-container>

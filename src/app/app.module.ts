@@ -16,6 +16,7 @@ import { InformationComponent } from './pages/information/information.component'
 import { AllergyInformationComponent } from './pages/information/allergy-information/allergy-information.component';
 import { SearchComponent } from './pages/search/search.component';
 import { ImageEditorComponent } from './pages/search/image-editor/image-editor.component';
+import { SocialMediaComponent } from './pages/information/social-media/social-media.component';
 
 //Firebase
 import { AngularFireModule } from '@angular/fire/compat';
@@ -39,6 +40,7 @@ import { AGoogTransModule } from 'a-goog-trans';
     AllergyInformationComponent,
     SearchComponent,
     ImageEditorComponent,
+    SocialMediaComponent,
   ],
   imports: [
     BrowserModule,
