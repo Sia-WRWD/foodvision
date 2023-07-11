@@ -1,0 +1,169 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.left-container {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+}
+
+.app-preview-image {
+    width: 600px;
+    height: 100%;
+}
+
+.right-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 40%;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.logo-border-container {
+    padding: 15px;
+    background: var(--accent);
+    border-radius: 25px;
+    filter: drop-shadow(1px 2px 3px black);
+}
+
+.logo-image {
+    width: 150px;
+    height: 150px;
+    filter: drop-shadow(1px 2px 3px black);
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    font-size: 5rem;
+    text-align: center;
+    text-shadow: 1px 2px 3px black;
+    color: var(--primary);
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.app-type {
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: black;
+    line-height: 1.5;
+}
+
+.app-description {
+    font-size: 20px;
+    text-align: center;
+    font-weight: normal;
+    line-height: 2;
+}
+
+.btnScanNow {
+    height: 75px;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 1px 2px 2px black;
+    filter: drop-shadow(1px 2px 3px black);
+    color: #fff !important;
+    background: var(--lighter-primary) !important;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        transform: translateY(-10px);
+    }
+}
+
+.btnScanNow-icon {
+    margin-left: 10px;
+    filter: drop-shadow(1px 2px 2px black);
+}
+
+//Responsive
+@media screen and (max-width: 1199px) {
+    .app-preview-image {
+        width: 100% !important;
+    }
+
+    .logo-image {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    .logo-text {
+        font-size: 3.5rem !important;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .flex-container {
+        flex-direction: column-reverse !important;
+        row-gap: 40px !important;
+    }
+
+    .left-container {
+        width: 100% !important;
+    }
+
+    .right-container {
+        width: 100% !important;
+    }
+
+    .logo-container {
+        margin: auto;
+        margin-bottom: 1rem;
+        column-gap: 20px;
+    }
+
+    .logo-image {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+    .logo-text {
+        font-size: 5rem !important;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .logo-image {
+        width: 125px !important;
+        height: 125px !important;
+    }
+
+    .logo-text {
+        font-size: 3.5rem !important;
+    }
+}
+
+@media screen and (max-width: 419px) {
+    .logo-image {
+        width: 75px !important;
+        height: 75px !important;
+    }
+
+    .logo-text {
+        font-size: 3rem !important;
+    }
+
+    .btnScanNow {
+        font-size: 1.5rem !important;
+    }
+}

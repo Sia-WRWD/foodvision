@@ -4,6 +4,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -26,6 +27,7 @@ export class NavigationComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private overlayContainer: OverlayContainer,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -56,5 +58,9 @@ export class NavigationComponent {
     } else {
       contentBackground!.style.backgroundImage = "url('../../../assets/background/bg-light.jpg')";
     }
+  }
+
+  direct(link: string) {
+    this.router.navigate([link]);
   }
 }

@@ -6,6 +6,14 @@
         <a class="mobile-title notranslate" routerLink="">FoodVision</a>
       </div>
     </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item (click)="direct('home')">
+          <mat-icon class="mobile-nav-icon">home</mat-icon> Home
+      </a>
+      <a mat-list-item (click)="direct('search')">
+          <mat-icon class="mobile-nav-icon">search</mat-icon> Search
+      </a>
+  </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary" ngxHideOnScroll [propertyUsedToHide]="'transform'"

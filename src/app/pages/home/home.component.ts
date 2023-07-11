@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { faMobileScreenButton } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,13 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  constructor() {}
+  faMobileScreenButton = faMobileScreenButton;
+
+  constructor(
+    private router: Router
+  ) {}
   
+  navigateToSearch() {
+    this.router.navigate(['search']);
+  }
 }
