@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./google-translator.component.scss']
 })
 export class GoogleTranslatorComponent {
-  languagesToInclude: string = "en,tl,id,ja,ko,ms,zh-CN,hi,th,zh-TW,vi";
+  languagesToInclude: string = "";
   defaultLanguage: string = "en";
   domainName: string = "foodvision-5132c.web.app"; //domainName: For Development === "localhost" || For Production === ".foodvision-5132c.web.app"
 

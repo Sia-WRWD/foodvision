@@ -63,7 +63,7 @@
     text-align: center;
     font-weight: 600;
     letter-spacing: 1.5px;
-    color: black;
+    color: var(--black2white);
     line-height: 1.5;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .btnScanNow {
-    height: 75px;
+    height: 75px !important;
     font-size: 2rem;
     font-weight: 600;
     letter-spacing: 1px;
