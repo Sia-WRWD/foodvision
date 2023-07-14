@@ -111,28 +111,45 @@
   }
 }
 
+.desktop-btn {
+  margin-left: .5rem;
+}
+
+.user-pfp {
+  background-image: url("../../../../../assets/logo/logo.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 0px 2px rgb(0, 0, 0, 0.1);
+  padding: 0;
+  width: 38px;
+  min-width: 0;
+  margin-left: .5rem;
+}
+
 //Responsive
-@media (min-width: 768px) and (max-width: 959px) {
+@media screen and (max-width: 991px) {
   .title {
     display: none;
   }
 
   .menu-icon {
     display: block;
+  }
+
+  .desktop-btn {
+    display: none;
+  }
+
+  #user-pfp {
+    display: none;
   }
 }
 
 @media (min-width: 280px) and (max-width: 767px) {
   .sidenav {
     width: 250px;
-  }
-
-  .title {
-    display: none;
-  }
-
-  .menu-icon {
-    display: block;
   }
 }
 

@@ -8,12 +8,34 @@
     </mat-toolbar>
     <mat-nav-list>
       <a mat-list-item (click)="direct('home')">
-          <mat-icon class="mobile-nav-icon">home</mat-icon> Home
+        <mat-icon class="mobile-nav-icon">home</mat-icon> Home
       </a>
       <a mat-list-item (click)="direct('search')">
-          <mat-icon class="mobile-nav-icon">search</mat-icon> Search
+        <mat-icon class="mobile-nav-icon">search</mat-icon> Search
       </a>
-  </mat-nav-list>
+      <ng-container *ngIf="!isLoggedIn">
+        <a mat-list-item (click)="direct('register')">
+          <mat-icon class="mobile-nav-icon">person_add</mat-icon> Register
+        </a>
+        <a mat-list-item (click)="direct('login')">
+          <mat-icon class="mobile-nav-icon">vpn_key</mat-icon> Login
+        </a>
+      </ng-container>
+      <ng-container *ngIf="isLoggedIn">
+        <a mat-list-item (click)="direct('profile')">
+          <mat-icon class="mobile-nav-icon">account_circle</mat-icon> Profile
+        </a>
+        <a mat-list-item (click)="direct('bookmark')">
+          <mat-icon class="mobile-nav-icon">collections_bookmark</mat-icon> Bookmark
+        </a>
+        <a mat-list-item (click)="direct('history')">
+          <mat-icon class="mobile-nav-icon">history</mat-icon> History
+        </a>
+        <a mat-list-item (click)="direct('logout')">
+          <mat-icon class="mobile-nav-icon">exit_to_app</mat-icon> Logout
+        </a>
+      </ng-container>
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary" ngxHideOnScroll [propertyUsedToHide]="'transform'"
@@ -27,19 +49,51 @@
         <div class="glowy-title" title="FoodVision">
           <a class="title notranslate" routerLink="">FoodVision</a>
         </div>
+
         <div class="flex-stretch"></div>
 
+        <!--Theme Changer-->
         <mat-icon class="desk-theme-icon mr-8">brightness_5</mat-icon>
-        <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
-        </mat-slide-toggle>
+        <mat-slide-toggle [formControl]="toggleControl" class="mr-8"></mat-slide-toggle>
         <mat-icon class="theme-icon">bedtime</mat-icon>
+
+        <ng-container *ngIf="!isLoggedIn">
+          <button mat-raised-button (click)="direct('register')" class="desktop-btn"
+            style="background: var(--accent); text-shadow: 1px 2px 3px black; color: white;">
+            <mat-icon class="mobile-nav-icon" style="color: white;">person_add</mat-icon> Register
+          </button>
+          <button mat-raised-button (click)="direct('login')" class="desktop-btn"
+            style="background: var(--primary); text-shadow: 1px 2px 3px black; color: white;">
+            <mat-icon class="mobile-nav-icon" style="color: white;">vpn_key</mat-icon> Login
+          </button>
+        </ng-container>
+        <ng-container *ngIf="isLoggedIn">
+          <button mat-button [matMenuTriggerFor]="menu" class="user-pfp" id="user-pfp">
+            <mat-icon mat-card-avatar></mat-icon>
+          </button>
+        </ng-container>
       </div>
     </mat-toolbar>
     <!-- Content -->
-    <div class="content-container container py-3">
+    <div class="content-container container py-3" id="content-container">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
 <app-google-translator></app-google-translator>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="direct('profile')">
+    <mat-icon class="mobile-nav-icon">account_circle</mat-icon> Profile
+  </button>
+  <button mat-menu-item (click)="direct('bookmark')">
+    <mat-icon class="mobile-nav-icon">collections_bookmark</mat-icon> Bookmark
+  </button>
+  <button mat-menu-item (click)="direct('history')">
+    <mat-icon class="mobile-nav-icon">history</mat-icon> History
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon class="mobile-nav-icon">exit_to_app</mat-icon> Logout
+  </button>
+</mat-menu>

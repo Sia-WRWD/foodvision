@@ -1,0 +1,42 @@
+<div class="flex-container">
+    <div class="login-container">
+        <form>
+            <p class="h1 login-form-title notranslate">FoodVision Login</p>
+            <div>
+                <mat-form-field class="control w-100" appearance="outline"> <!--Email-->
+                    <mat-label>Email</mat-label>
+                    <input matInput class="email" type="email" [formControl]="email" placeholder="food@example.com"
+                        required />
+                    <mat-error *ngIf="email.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="control w-100" appearance="outline"> <!--Password-->
+                    <mat-label>Password</mat-label>
+                    <input matInput class="password" type="password" [formControl]="password" placeholder="food@1234"
+                        required />
+                    <mat-error *ngIf="password.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" class="btnLogin notranslate" (click)="verifyLoginDetails()"
+                [disabled]="email.invalid || password.invalid">Sign In</button> <!--Sign In-->
+        </form>
+
+        <hr class="solid-divider">
+
+        <div class="other-content">
+            <p class="account">
+                Don't have an Account?
+                <a (click)="direct('register')" class="register-link">Register here.</a>
+                <!--Sign Up-->
+            </p>
+            <p class="forgot-pwd">
+                <a (click)="direct('forgot-password')" class="forgot-link">Forgot Your Password?</a> <!--Forgot Password-->
+            </p>
+        </div>
+    </div>
+</div>

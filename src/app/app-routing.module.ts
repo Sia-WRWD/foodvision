@@ -5,6 +5,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { InformationComponent } from './pages/information/information.component';
 import { SearchComponent } from './pages/search/search.component';
 import { ImageEditorComponent } from './pages/search/image-editor/image-editor.component';
+import { RecipeComponent } from './pages/recipe/recipe.component';
+import { RegisterComponent } from './pages/user/register/register.component';
+import { LoginComponent } from './pages/user/login/login.component';
+import { BookmarkComponent } from './pages/user/bookmark/bookmark.component';
+import { HistoryComponent } from './pages/user/history/history.component';
+import { AuthGuard } from './pages/user/auth-guard.service';
+import { LoginGuard } from './pages/user/login-guard.service';
+import { ProfileComponent } from './pages/user/profile/profile.component';
+import { ForgotPasswordComponent } from './pages/user/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -29,10 +38,43 @@ const routes: Routes = [
     component: SearchComponent
   },
   {
+    path: 'recipe',
+    component: RecipeComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'bookmark',
+    component: BookmarkComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'history',
+    component: HistoryComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     component: Error404Component
   }
-
 ];
 
 @NgModule({

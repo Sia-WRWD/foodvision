@@ -1,0 +1,57 @@
+<div class="flex-container">
+    <div class="register-container">
+        <form>
+            <p class="h1 register-form-title notranslate">FoodVision Register</p>
+            <div class="d-flex control-pair" style="column-gap: 20px;">
+                <mat-form-field class="control w-100" appearance="outline"> <!--Email-->
+                    <mat-label>Email</mat-label>
+                    <input matInput class="email" type="email" [formControl]="email" placeholder="food@example.com"
+                        required />
+                    <mat-error *ngIf="email.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="control w-100" appearance="outline"> <!--Password-->
+                    <mat-label>Password</mat-label>
+                    <input matInput class="password" type="password" [formControl]="password" placeholder="food@1234"
+                        required />
+                    <mat-error *ngIf="password.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="d-flex control-pair" style="column-gap: 20px;">
+                <mat-form-field class="control w-100" appearance="outline"> <!--Username-->
+                    <mat-label>Username</mat-label>
+                    <input matInput class="username" type="name" [formControl]="username" placeholder="foodie101"
+                        required />
+                    <mat-error *ngIf="username.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="control w-100" appearance="outline"> <!--Name-->
+                    <mat-label>Name</mat-label>
+                    <input matInput class="name" type="name" [formControl]="name" placeholder="John Foodman" required />
+                    <mat-error *ngIf="name.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mb-3">
+                <p class="h2 allergen-title">I am Allergic to:</p>
+                <mat-chip-listbox aria-label="Allergens Selection" multiple (change)="onAllergensSelectionChange($event)">
+                    <mat-chip-option value="eggs">Eggs </mat-chip-option>
+                    <mat-chip-option color="accent" value="fish">Fish </mat-chip-option>
+                    <mat-chip-option color="warn" value="shellfish">Shellfish </mat-chip-option>
+                    <mat-chip-option value="wheat">Wheat </mat-chip-option>
+                    <mat-chip-option color="accent" value="peanuts">Peanuts </mat-chip-option>
+                    <mat-chip-option color="warn" value="milk">Milk </mat-chip-option>
+                    <mat-chip-option value="soybeans">Soybeans </mat-chip-option>
+                    <mat-chip-option color="accent" value="sesame">Sesame </mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+            <button mat-raised-button color="primary" class="btnRegister notranslate" (click)="registerNewUser()"
+                [disabled]="email.invalid || password.invalid || username.invalid || name.invalid">Register</button>
+        </form>
+    </div>
+</div>

@@ -5,6 +5,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/pages/user/user.service';
 
 @Component({
   selector: 'app-navigation',
@@ -17,6 +18,7 @@ export class NavigationComponent {
   toggleControl = new UntypedFormControl(false);
   user: boolean = false;
   userData: any;
+  isLoggedIn: boolean = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -27,11 +29,22 @@ export class NavigationComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private overlayContainer: OverlayContainer,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.changeTheme();
+    this.checkLoggedIn();
+  }
+
+  checkLoggedIn() {
+    const token = sessionStorage.getItem('token');
+    const firebaseUuidPattern = /^[A-Za-z0-9]{28}$/;
+
+    if (token && firebaseUuidPattern.test(token) && sessionStorage.getItem('isLoggedIn')) {
+      this.isLoggedIn = true;
+    }
   }
 
   changeTheme() {
@@ -62,5 +75,9 @@ export class NavigationComponent {
 
   direct(link: string) {
     this.router.navigate([link]);
+  }
+
+  logout() {
+    this.userService.logOut();
   }
 }

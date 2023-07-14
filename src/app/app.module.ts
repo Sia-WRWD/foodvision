@@ -8,6 +8,7 @@ import { HttpClientModule } from  '@angular/common/http';
 
 import { AMModule } from './am.module';
 import { SharedModule } from './pages/shared/shared.module';
+import { UserModule } from './pages/user/user.module';
 
 import { NavigationComponent } from './pages/shared/components/navigation/navigation.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -17,6 +18,7 @@ import { AllergyInformationComponent } from './pages/information/allergy-informa
 import { SearchComponent } from './pages/search/search.component';
 import { ImageEditorComponent } from './pages/search/image-editor/image-editor.component';
 import { SocialMediaComponent } from './pages/information/social-media/social-media.component';
+import { RecipeComponent } from './pages/recipe/recipe.component';
 
 //Firebase
 import { AngularFireModule } from '@angular/fire/compat';
@@ -29,6 +31,7 @@ import { environment } from './environments/environment';
 //Other Libraries
 import { NgxHideOnScrollModule } from 'ngx-hide-on-scroll';
 import { AGoogTransModule } from 'a-goog-trans';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { AGoogTransModule } from 'a-goog-trans';
     SearchComponent,
     ImageEditorComponent,
     SocialMediaComponent,
+    RecipeComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,7 @@ import { AGoogTransModule } from 'a-goog-trans';
     BrowserAnimationsModule,
     AMModule,
     SharedModule,
+    UserModule,
     NgxHideOnScrollModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
@@ -57,6 +62,8 @@ import { AGoogTransModule } from 'a-goog-trans';
     FontAwesomeModule,
     HttpClientModule,
     AGoogTransModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
