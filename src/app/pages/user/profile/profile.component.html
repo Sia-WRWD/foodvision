@@ -97,8 +97,8 @@
             <div>
                 <p class="h1 bookmark-title">Bookmarks</p>
             </div>
-            <div *ngIf="userInfo?.bookmark">
-                <mat-list>
+            <div>
+                <mat-list *ngIf="userInfo?.bookmark && userInfo?.bookmark.length !== 0">
                     <mat-list-item *ngFor="let item of userInfo?.bookmark.reverse()">
                         <mat-icon matListItemIcon>
                             <a href="/recipe?food={{parseItem(item)?.food}}" class="redirect">
@@ -110,13 +110,16 @@
                     </mat-list-item>
                 </mat-list>
             </div>
+            <div *ngIf="!userInfo?.bookmark || userInfo?.bookmark.length === 0">
+                <p class="h3 no-record">No recipes have been bookmarked yet.</p>
+            </div>
         </div>
         <hr class="divider">
         <div class="history-container" id="history">
             <div>
                 <p class="h1 history-title">History Logs</p>
             </div>
-            <div *ngIf="userInfo?.history">
+            <div *ngIf="userInfo?.history && userInfo.history.length !== 0">
                 <ng-container *ngFor="let item of userInfo?.history.slice().reverse().slice(0, 5)">
                     <mat-expansion-panel class="history-panel">
                         <mat-expansion-panel-header>
@@ -133,6 +136,9 @@
                         </a>
                     </mat-expansion-panel>
                 </ng-container>
+            </div>
+            <div *ngIf="!userInfo?.history || userInfo?.history.length === 0">
+                <p class="h3 no-record">No food images have been provided for classification yet.</p>
             </div>
         </div>
     </div>

@@ -8,8 +8,6 @@ import { ImageEditorComponent } from './pages/search/image-editor/image-editor.c
 import { RecipeComponent } from './pages/recipe/recipe.component';
 import { RegisterComponent } from './pages/user/register/register.component';
 import { LoginComponent } from './pages/user/login/login.component';
-import { BookmarkComponent } from './pages/user/bookmark/bookmark.component';
-import { HistoryComponent } from './pages/user/history/history.component';
 import { AuthGuard } from './pages/user/auth-guard.service';
 import { LoginGuard } from './pages/user/login-guard.service';
 import { ProfileComponent } from './pages/user/profile/profile.component';
@@ -59,16 +57,6 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'bookmark',
-    component: BookmarkComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'history',
-    component: HistoryComponent,
     canActivate: [AuthGuard]
   },
   {
