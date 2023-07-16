@@ -4,11 +4,14 @@ import { faEgg, faWheatAlt, faCow, faTree, faShrimp, faFishFins, faSeedling, faP
 import { SharedService } from '../shared/shared.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { UserService } from '../user/user.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
+  providers: [DatePipe]
 })
 export class SearchComponent {
 
@@ -36,29 +39,72 @@ export class SearchComponent {
   statusMessage: string = "";
   status: string = "";
 
+  isLoggedIn: string = "";
+  userAllergens: string[] = [];
+  userInfo: any;
+
   constructor(
-    public dialog: MatDialog, 
-    private sharedService: SharedService, 
+    public dialog: MatDialog,
+    private sharedService: SharedService,
+    private userService: UserService,
     private http: HttpClient,
-    private router: Router
-    ) { }
+    private router: Router,
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit() {
-    this.checkExistingAllergens();
+    this.checkLoggedIn();
+
+    if (!this.isLoggedIn) {
+      this.checkExistingAllergens();
+    }
+  }
+
+  checkLoggedIn() {
+    this.isLoggedIn = sessionStorage.getItem("isLoggedIn")!;
+    console.log(this.isLoggedIn);
+    if (this.isLoggedIn) {
+      const uid = sessionStorage.getItem("token");
+      this.userService.fetchUserInfo(uid).subscribe(res => {
+        this.userInfo = res;
+        this.userAllergens = this.userInfo.allergens;
+        this.checkExistingAllergens();
+      })
+    }
   }
 
   checkExistingAllergens() {
     const selectedAllergens = JSON.parse(sessionStorage.getItem('selectedAllergens')!);
 
-    if (selectedAllergens && selectedAllergens.length > 0) {
-      const matchingAllergens = this.allergens.filter(allergen =>
-        selectedAllergens.includes(allergen.name)
-      );
-    
-      matchingAllergens.forEach(allergen => {
-        allergen.checked = true;
-      });
+    if (this.isLoggedIn) {
+      this.handleLoggedInUser(selectedAllergens);
+    } else {
+      this.handleLoggedOutUser(selectedAllergens);
     }
+  }
+
+  handleLoggedInUser(selectedAllergens: string[]) {
+    if (this.userAllergens && this.userAllergens.length > 0) {
+      const allergensToCheck = selectedAllergens || this.userAllergens;
+
+      this.setAllergensChecked(allergensToCheck);
+    }
+  }
+
+  handleLoggedOutUser(selectedAllergens: string[]) {
+    if (selectedAllergens && selectedAllergens.length > 0) {
+      this.setAllergensChecked(selectedAllergens);
+    }
+  }
+
+  setAllergensChecked(allergensToCheck: string[]) {
+    const matchingAllergens = this.allergens.filter(allergen =>
+      allergensToCheck.includes(allergen.name)
+    );
+
+    matchingAllergens.forEach(allergen => {
+      allergen.checked = true;
+    });
   }
 
   openCropDialog() {
@@ -135,6 +181,9 @@ export class SearchComponent {
     this.getSelectedAllergens();
     this.openProgressDialog();
     this.classify();
+    if (this.isLoggedIn) {
+      this.createHistory();
+    }
   }
 
   async classify() {
@@ -200,5 +249,21 @@ export class SearchComponent {
       this.dialog.closeAll();
       this.router.navigate(['/information']);
     }
+  }
+
+  createHistory() {
+    const token = sessionStorage.getItem('token')!;
+    const food_classified = sessionStorage.getItem("classifiedFood");
+    const last_added = this.getFormattedDate();
+
+    this.userService.uploadImage().subscribe(res => {
+      const formattedData = `{"input": "${res}", "food_classified": "${food_classified}", "last_added": "${last_added}"}`
+      this.userService.updateHistory(token, formattedData);
+    });
+  }
+
+  getFormattedDate(): string {
+    const date = new Date();
+    return this.datePipe.transform(date, 'dd/MM/yyyy')!;
   }
 }

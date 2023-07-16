@@ -8,6 +8,7 @@ import { HistoryComponent } from './history/history.component';
 import { AMModule } from 'src/app/am.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { foodNamePipe } from '../shared/validators/name.pipe';
 
 
 
@@ -18,7 +19,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     LoginComponent,
     BookmarkComponent,
     HistoryComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    foodNamePipe
   ],
   imports: [
     CommonModule,

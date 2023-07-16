@@ -1,1 +1,185 @@
-<p>profile works!</p>
+<div class="flex-container">
+    <div class="profile-container">
+        <div class="profile-details-container" id="profile">
+            <div>
+                <p class="h1 profile-title">Your Profile Details</p>
+            </div>
+            <ng-container *ngIf="!isEdit; else showEditable">
+                <div>
+                    <label class="label">Username</label>
+                    <p class="h1 username-title">{{userInfo?.username}}</p>
+                </div>
+                <div>
+                    <label class="label">Name</label>
+                    <p class="h1 name-title">{{userInfo?.name}}</p>
+                </div>
+                <div>
+                    <label class="label">Email</label>
+                    <p class="h1 email-title">{{userInfo?.email}}</p>
+                </div>
+            </ng-container>
+            <ng-template #showEditable>
+                <mat-form-field class="control w-100" appearance="outline"> <!--Username-->
+                    <mat-label>Username</mat-label>
+                    <input matInput class="username" type="name" [formControl]="username" placeholder="foodie101"
+                        required />
+                    <mat-error *ngIf="username.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="control w-100" appearance="outline"> <!--Name-->
+                    <mat-label>Name</mat-label>
+                    <input matInput class="name" type="name" [formControl]="name" placeholder="John Foodman" required />
+                    <mat-error *ngIf="name.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="control w-100" appearance="outline"> <!--Email-->
+                    <mat-label>Email</mat-label>
+                    <input matInput class="email" type="email" [formControl]="email" placeholder="food@example.com"
+                        required />
+                    <mat-error *ngIf="email.invalid">
+                        {{getErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+            </ng-template>
+            <div class="mb-4">
+                <label class="label mb-2">My Allergens</label>
+                <mat-chip-listbox aria-label="Allergens Selection" multiple
+                    (change)="onAllergensSelectionChange($event)">
+                    <mat-chip-option color="warn" value="eggs" [disabled]="!isEdit"
+                        [selected]="userInfo?.allergens?.includes('eggs')">
+                        Eggs
+                    </mat-chip-option>
+                    <mat-chip-option color="accent" value="fish" [disabled]="!isEdit"
+                        [selected]="userInfo?.allergens?.includes('fish')">
+                        Fish
+                    </mat-chip-option>
+                    <mat-chip-option color="warn" value="shellfish" [disabled]="!isEdit"
+                        [selected]="userInfo?.allergens?.includes('shellfish')">
+                        Shellfish
+                    </mat-chip-option>
+                    <mat-chip-option color="accent" value="wheat" [disabled]="!isEdit"
+                        [selected]="userInfo?.allergens?.includes('wheat')">
+                        Wheat
+                    </mat-chip-option>
+                    <mat-chip-option color="warn" value="peanuts" [disabled]="!isEdit"
+                        [selected]="userInfo?.allergens?.includes('peanuts')">
+                        Peanuts
+                    </mat-chip-option>
+                    <mat-chip-option color="accent" value="milk" [disabled]="!isEdit"
+                        [selected]="userInfo?.allergens?.includes('milk')">
+                        Milk
+                    </mat-chip-option>
+                    <mat-chip-option color="warn" value="soybeans" [disabled]="!isEdit"
+                        [selected]="userInfo?.allergens?.includes('soybeans')">
+                        Soybeans
+                    </mat-chip-option>
+                    <mat-chip-option color="accent" value="sesame" [disabled]="!isEdit"
+                        [selected]="userInfo?.allergens?.includes('sesame')">
+                        Sesame
+                    </mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+            <div class="btnActions-container" *ngIf="isEdit">
+                <button mat-raised-button (click)="resetInfo()" color="warn" class="btnAction">
+                    <mat-icon class="action-icon">cancel</mat-icon> Cancel
+                </button>
+                <button mat-raised-button (click)="updateInfo()" color="accent" style="margin-left: .5rem;"
+                    class="btnAction"
+                    [disabled]="userInfo.name == name.value && userInfo.username == username.value && userInfo.email == email.value && selectedAllergens == null">
+                    <mat-icon class="action-icon">save</mat-icon> Save Changes
+                </button>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="bookmark-container" id="bookmark">
+            <div>
+                <p class="h1 bookmark-title">Bookmarks</p>
+            </div>
+            <div *ngIf="userInfo?.bookmark">
+                <mat-list>
+                    <mat-list-item *ngFor="let item of userInfo?.bookmark.reverse()">
+                        <mat-icon matListItemIcon>
+                            <a href="/recipe?food={{parseItem(item)?.food}}" class="redirect">
+                                open_in_new
+                            </a>
+                        </mat-icon>
+                        <div matListItemTitle> {{ parseItem(item)?.food | foodNamePipe }} </div>
+                        <div matListItemLine> {{ parseItem(item)?.last_added }}</div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="history-container" id="history">
+            <div>
+                <p class="h1 history-title">History Logs</p>
+            </div>
+            <div *ngIf="userInfo?.history">
+                <ng-container *ngFor="let item of userInfo?.history.slice().reverse().slice(0, 5)">
+                    <mat-expansion-panel class="history-panel">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ parseItem(item)?.food_classified | foodNamePipe }}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                {{ parseItem(item)?.last_added }}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <a href="{{ parseItem(item)?.input }}" target="_blank" style="text-decoration: none;">
+                            <span class="file-icon">📄</span>
+                            <span class="file-name">{{ parseItem(item)?.food_classified }}_input.jpg</span>
+                        </a>
+                    </mat-expansion-panel>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="edit-widget" *ngIf="!isEdit">
+    <button class="btnEdit" (click)="isEdit = true" matTooltip="Edit Profile Details">
+        <mat-icon class="widget-icon">edit</mat-icon>
+    </button>
+</div>
+
+<div class="info-widget">
+    <button class="btnInfo" [matMenuTriggerFor]="menu" matTooltip="Profile Navigation">
+        <mat-icon class="info-icon">my_location</mat-icon>
+    </button>
+</div>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="scrollTo('profile')">
+        <mat-icon class="mobile-nav-icon">info</mat-icon> Profile
+    </button>
+    <button mat-menu-item (click)="scrollTo('bookmark')">
+        <mat-icon class="mobile-nav-icon">bookmark_collection</mat-icon> Bookmark
+    </button>
+    <button mat-menu-item (click)="scrollTo('history')">
+        <mat-icon class="mobile-nav-icon">history</mat-icon> History
+    </button>
+</mat-menu>
+
+<!-- <table mat-table [dataSource]="bookmarkDataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="food">
+        <th mat-header-cell *matHeaderCellDef> Food Name </th>
+        <td mat-cell *matCellDef="let item"> {{ item.food }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="last_added">
+        <th mat-header-cell *matHeaderCellDef (click)="toggleSortDirection()"> Last Added </th>
+        <td mat-cell *matCellDef="let item"> {{ item.last_added }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let item">
+            <a mat-button href="/recipe/{{ item.food }}">Go to Details</a>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['food', 'last_added', 'action']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['food', 'last_added', 'action']"></tr>
+</table> -->

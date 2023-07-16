@@ -19,6 +19,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
     exports: [
@@ -40,7 +42,9 @@ import { MatChipsModule } from '@angular/material/chips';
         MatSnackBarModule,
         MatBadgeModule,
         MatFormFieldModule,
-        MatChipsModule
+        MatChipsModule,
+        MatTableModule,
+        MatExpansionModule
     ]
 })
 export class AMModule { }

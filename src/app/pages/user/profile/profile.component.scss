@@ -1,0 +1,212 @@
+:host {
+    width: 100%;
+}
+
+.flex-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-container {
+    width: 100%;
+    padding: 40px;
+    border: 2px solid black;
+    background: rgb(255, 87, 34, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: 1px 2px 3px black;
+    border-radius: 25px;
+}
+
+.profile-title, .history-title, .bookmark-title {
+    margin-bottom: 1.5rem;
+    font-weight: bolder;
+    text-shadow: 1px 2px 3px black;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    line-height: 1.5;
+}
+
+.history-title, .bookmark-title {
+    margin-bottom: .5rem;
+}
+
+.username-title, .name-title, .email-title {
+    font-size: 2.25rem;
+    font-weight: bolder;
+    margin-bottom: 1rem;
+    color: var(--lighter-primary);
+    text-shadow: 1px 2px 3px black;
+    letter-spacing: 1px;
+}
+
+.label {
+    font-size: 1rem;
+}
+
+.btnActions-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.action-icon {
+    
+}
+
+.divider {
+    border-top: var(--lighter-accent) solid;
+    box-shadow: 1px 1px 1px black;
+    opacity: 1;
+    margin: 1.5rem 0;
+}
+
+//Bookmark
+.bookmark-container {
+
+}
+
+:host ::ng-deep .mat-mdc-list-item.mdc-list-item--with-leading-avatar.mdc-list-item--with-two-lines, 
+.mat-mdc-list-item.mdc-list-item--with-leading-checkbox.mdc-list-item--with-two-lines, 
+.mat-mdc-list-item.mdc-list-item--with-leading-icon.mdc-list-item--with-two-lines {
+    background: var(--lighter-primary);
+    text-shadow: 1px 1px 1px black;
+    box-shadow: 1px 2px 3px black;
+    margin-bottom: 10px;
+    border-radius: 7px;
+}
+
+:host ::ng-deep .mdc-list-item--with-leading-icon.mdc-list-item--with-two-lines .mdc-list-item__primary-text {
+    color: #ffffff;
+}
+
+:host ::ng-deep .mdc-list-item__secondary-text {
+    opacity: 0.5;
+}
+
+.redirect {
+    text-decoration: none;
+    color: #ffffff;
+    text-shadow: 1px 2px 3px black;
+    transition: 0.1s ease-in;
+
+    &:hover {
+        color: var(--accent);
+    }
+}
+
+//History
+.history-panel {
+    background: var(--lighter-primary) !important;
+    margin-bottom: 10px;
+}
+
+:host ::ng-deep .mat-expansion-panel:not(.mat-expanded):not([aria-disabled=true]) .mat-expansion-panel-header:hover {
+    background: var(--lighter-primary) !important;
+}
+
+.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+    color: #ffffff;
+    text-shadow: 1px 1px 1px black;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    filter: drop-shadow(1px 1px 1px black);
+
+    &::after {
+        color: #ffffff !important;
+    }
+}
+
+//Edit Widget
+.edit-widget {
+    position: fixed;
+    bottom: 275px;
+    right: 23px;
+    height: 50px;
+    z-index: 2;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 3px 12px #00000026;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnEdit {
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+.widget-icon {
+    color: var(--primary);
+    text-shadow: 1px 2px 3px black;
+}
+
+:host ::ng-deep .mat-mdc-standard-chip.mdc-evolution-chip--disabled {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep mat-chip-option {
+    box-shadow: 1px 2px 3px black;
+}
+
+//Info Widget
+.info-widget {
+    position: fixed;
+    bottom: 215px;
+    right: 23px;
+    height: 50px;
+    z-index: 2;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 3px 12px #00000026;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnInfo {
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+.info-icon {
+    color: var(--primary);
+    text-shadow: 1px 2px 3px black;
+    display: flex;
+}
+
+//Responsive
+@media screen and (max-width: 575px) {
+    .profile-title, .history-title, .bookmark-title {
+        font-size: 2rem !important;
+    }
+
+    .username-title, .name-title, .email-title {
+        font-size: 1.55rem !important;
+        word-break: break-all;
+    }
+}
+
+@media screen and (max-width: 388px) {
+    .btnActions-container {
+        flex-wrap: wrap;
+        row-gap: 10px;
+    }
+
+    .btnAction {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+}

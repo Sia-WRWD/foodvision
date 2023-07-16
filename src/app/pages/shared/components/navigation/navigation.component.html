@@ -23,13 +23,7 @@
       </ng-container>
       <ng-container *ngIf="isLoggedIn">
         <a mat-list-item (click)="direct('profile')">
-          <mat-icon class="mobile-nav-icon">account_circle</mat-icon> Profile
-        </a>
-        <a mat-list-item (click)="direct('bookmark')">
-          <mat-icon class="mobile-nav-icon">collections_bookmark</mat-icon> Bookmark
-        </a>
-        <a mat-list-item (click)="direct('history')">
-          <mat-icon class="mobile-nav-icon">history</mat-icon> History
+          <mat-icon class="mobile-nav-icon">account_circle</mat-icon> My Details
         </a>
         <a mat-list-item (click)="direct('logout')">
           <mat-icon class="mobile-nav-icon">exit_to_app</mat-icon> Logout
@@ -75,7 +69,7 @@
       </div>
     </mat-toolbar>
     <!-- Content -->
-    <div class="content-container container py-3" id="content-container">
+    <div class="content-container container py-5" id="content-container">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
@@ -85,13 +79,10 @@
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="direct('profile')">
-    <mat-icon class="mobile-nav-icon">account_circle</mat-icon> Profile
+    <mat-icon class="mobile-nav-icon">account_circle</mat-icon> My Details
   </button>
-  <button mat-menu-item (click)="direct('bookmark')">
-    <mat-icon class="mobile-nav-icon">collections_bookmark</mat-icon> Bookmark
-  </button>
-  <button mat-menu-item (click)="direct('history')">
-    <mat-icon class="mobile-nav-icon">history</mat-icon> History
+  <button mat-menu-item (click)="direct('search')">
+    <mat-icon class="mobile-nav-icon">search</mat-icon> Search
   </button>
   <button mat-menu-item (click)="logout()">
     <mat-icon class="mobile-nav-icon">exit_to_app</mat-icon> Logout
