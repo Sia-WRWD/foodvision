@@ -35,4 +35,10 @@ export class SharedService {
 
     return this.store.collection("food").doc(uid).valueChanges();
   }
+
+  getRecipeInfo(food: string) {
+    const uid = food.toLowerCase().replace(/\s/g, '-');
+
+    return this.store.collection("recipe").doc(uid).valueChanges();
+  }
 }
