@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-error404',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./error404.component.scss']
 })
 export class Error404Component {
+
+  constructor(private router: Router) {}
+
+  directHome() {
+    this.router.navigate(['home']);
+  }
 
 }
