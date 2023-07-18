@@ -69,3 +69,10 @@
     color: #D6D6D6;
     text-transform: none;
 }
+
+//responsive {
+@media screen and (max-width: 481px) {
+    .login-form-title {
+        font-size: 2rem !important;
+    }
+}
