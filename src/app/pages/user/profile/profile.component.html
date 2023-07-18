@@ -34,14 +34,6 @@
                         {{getErrorMessage()}}
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="control w-100" appearance="outline"> <!--Email-->
-                    <mat-label>Email</mat-label>
-                    <input matInput class="email" type="email" [formControl]="email" placeholder="food@example.com"
-                        required />
-                    <mat-error *ngIf="email.invalid">
-                        {{getErrorMessage()}}
-                    </mat-error>
-                </mat-form-field>
             </ng-template>
             <div class="mb-4">
                 <label class="label mb-2">My Allergens</label>
@@ -87,7 +79,7 @@
                 </button>
                 <button mat-raised-button (click)="updateInfo()" color="accent" style="margin-left: .5rem;"
                     class="btnAction"
-                    [disabled]="userInfo.name == name.value && userInfo.username == username.value && userInfo.email == email.value && selectedAllergens == null">
+                    [disabled]="userInfo.name == name.value && userInfo.username == username.value && selectedAllergens == null">
                     <mat-icon class="action-icon">save</mat-icon> Save Changes
                 </button>
             </div>

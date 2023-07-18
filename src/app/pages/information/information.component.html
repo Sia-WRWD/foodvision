@@ -15,8 +15,8 @@
                 <p class="h3">{{classifiedFoodData?.ingredients}}</p>
             </div>
             <div class="food-source">
-                <button mat-raised-button class="btnSource" matTooltip="Recipe" *ngIf="classifiedFoodData?.source?.[0]">
-                    <a href="{{classifiedFoodData.source[0]}}" target="_blank">
+                <button mat-raised-button class="btnSource" matTooltip="Recipe">
+                    <a href="/recipe?food={{classifiedFoodRecipe}}" target="_blank">
                         <fa-icon [icon]="faCarrot"></fa-icon>
                     </a>
                 </button>

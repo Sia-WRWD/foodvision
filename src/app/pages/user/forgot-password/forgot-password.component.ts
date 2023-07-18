@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { UserService } from '../user.service';
+import { SharedService } from '../../shared/shared.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,4 +10,27 @@ import { Component } from '@angular/core';
 })
 export class ForgotPasswordComponent {
 
+  email = new FormControl('', [Validators.required, Validators.email]);
+
+  ngOnInit() {
+
+  }
+
+  constructor(
+    private userService: UserService,
+    private sharedService: SharedService
+  ) {}
+
+  submitResetPasswordRequest() {
+    const email = this.email.value!;
+
+    this.userService.sendPasswordResetEmail(email).then(res => {
+      if (res == "Successfully Sent Reset Password.") {
+        this.sharedService.showSnackbar("Password reset email has been sent, please check your email! ✅", "ok");
+      } else {
+        this.sharedService.showSnackbar("Something went wrong, please try again later! ⚠️", "ok");
+      }
+    })
+    this.email.setValue("");
+  }
 }

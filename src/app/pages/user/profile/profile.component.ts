@@ -5,6 +5,7 @@ import { nameValidator, usernameValidator } from '../../shared/validators/input-
 import { SlicePipe } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, take } from 'rxjs';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,12 +19,12 @@ export class ProfileComponent {
   isEdit: boolean = false;
   selectedAllergens: any;
 
-  email = new FormControl('', [Validators.required, Validators.email]);
   name = new FormControl('', [Validators.required, nameValidator]);
   username = new FormControl('', [Validators.required, usernameValidator]);
 
   constructor(
     private userService: UserService,
+    private sharedService: SharedService,
     private route: ActivatedRoute,
     private elementRef: ElementRef,
     private router: Router
@@ -34,7 +35,7 @@ export class ProfileComponent {
   }
 
   getUserInfo() {
-    const token = sessionStorage.getItem('token')
+    const token = sessionStorage.getItem('token');
     this.userService.fetchUserInfo(token).subscribe(res => {
       this.userInfo = res;
       this.setInitialInputsValues();
@@ -42,7 +43,6 @@ export class ProfileComponent {
   }
 
   setInitialInputsValues() {
-    this.email.setValue(this.userInfo?.email);
     this.name.setValue(this.userInfo?.name);
     this.username.setValue(this.userInfo?.username);
   }
@@ -54,23 +54,28 @@ export class ProfileComponent {
   }
 
   updateInfo() {
-    const email = this.email.value;
-    const name = this.name.value;
-    const username = this.username.value;
-    const allergens = this.selectedAllergens;
+    const token = sessionStorage.getItem('token')!;
+    const name = this.name.value!;
+    const username = this.username.value!;
+    const allergens = this.selectedAllergens!;
+
+    this.userService.updateUserProfile(token, name, username, allergens).then(res => {
+      if (res == "Profile Updated Successfully.") {
+        this.getUserInfo();
+        this.sharedService.showSnackbar("Profile Update is Successful! ✅", "ok");
+      } else {
+        this.getUserInfo();
+        this.sharedService.showSnackbar("Something went wrong, please try again! ⚠️", "ok");
+      }
+    });
 
     this.isEdit = false;
     this.selectedAllergens = null;
   }
 
   getErrorMessage() {
-    if (this.email.hasError('required') || this.name.hasError('required') ||
-      this.username.hasError('required')) {
+    if (this.name.hasError('required') || this.username.hasError('required')) {
       return 'Field cannot be empty!';
-    }
-
-    if (this.email.hasError('email')) {
-      return 'Not a valid email!';
     }
 
     if (this.name.hasError('invalidName')) {

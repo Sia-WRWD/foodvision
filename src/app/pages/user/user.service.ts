@@ -4,7 +4,17 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
 import { arrayUnion, arrayRemove } from 'firebase/firestore';
-import { Observable, finalize, from, switchMap, throwError } from 'rxjs';
+import { Observable, finalize, from, map, switchMap, throwError } from 'rxjs';
+import firebase from 'firebase/compat/app';
+
+interface UserData {
+  allergens: string[];
+  bookmark: string[];
+  email: string;
+  history: string[];
+  name: string;
+  username: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -82,34 +92,70 @@ export class UserService {
     return this.RegisterResult;
   }
 
+  updateUserProfile(uid: string, name: string, username: string, allergens: string[]): Promise<string> {
+    const userRef = this.store.collection('users').doc(uid);
+
+    // Update the fields using the set method with { merge: true } option
+    return userRef.set(
+      {
+        name: name,
+        username: username,
+        allergens: allergens
+      },
+      { merge: true }
+    )
+      .then(() => {
+        return 'Profile Updated Successfully.';
+      })
+      .catch((error) => {
+        return 'Error Updating profile: ' + error.message;
+      });
+  }
+
   updateHistory(uid: string, newValue: string) {
     this.store.collection("users").doc(uid).update({ history: arrayUnion(newValue) })
       .then(() => {
-        console.log("New Value added to user history successfully!");
+        // console.log("New Value added to user history successfully!");
       })
       .catch((error) => {
         console.error("Error adding new value: ", error);
       })
   }
 
-  updateBookmark(uid: string, value: string, operation: string) {
-    if (operation == "add") {
-      this.store.collection("users").doc(uid).update({ bookmark: arrayUnion(value) })
-        .then(() => {
-          console.log("New Value added to user bookmark successfully!");
-        })
-        .catch((error) => {
-          console.error("Error adding new value: ", error);
-        })
-    } else if (operation == "remove") {
-      this.userRef.doc(uid).update({ bookmark: arrayRemove(value) })
-        .then(() => {
-          console.log('Value removed from bookmark array successfully');
-        })
-        .catch((error) => {
-          console.error('Error removing value: ', error);
+  async updateBookmark(uid: string, value: string, operation: string): Promise<string> {
+    try {
+      if (operation === "add") {
+        await this.store.collection("users").doc(uid).update({ bookmark: firebase.firestore.FieldValue.arrayUnion(value) });
+        return "Added Food to Bookmark!";
+      } else if (operation === "remove") {
+        const bookmarkArray = await this.getUserBookmarkArray(uid);
+        const matchingIndex = bookmarkArray.findIndex((item: string) => {
+          const parsedItem = JSON.parse(item);
+          return parsedItem.food === value;
         });
+
+        if (matchingIndex !== -1) {
+          bookmarkArray.splice(matchingIndex, 1);
+          await this.store.collection("users").doc(uid).update({ bookmark: bookmarkArray });
+          return "Removed Food from Bookmark!";
+        } else {
+          return "Food not found in Bookmark.";
+        }
+      } else {
+        throw new Error("Invalid operation. Please use 'add' or 'remove'.");
+      }
+    } catch (error) {
+      console.error("Error updating bookmark: ", error);
+      throw error;
     }
+  }
+
+
+  async getUserBookmarkArray(uid: string): Promise<string[]> {
+    const userSnapshot = await this.store.collection("users").doc(uid).get().toPromise();
+    const userData = userSnapshot?.data() as UserData;
+
+    return userData?.bookmark || [];
   }
 
   uploadImage(): Observable<string> {
@@ -147,6 +193,16 @@ export class UserService {
       );
     } else {
       return throwError('File data URL not found.');
+    }
+  }
+
+  async sendPasswordResetEmail(email: string): Promise<string> {
+    try {
+      await this.afAuth.sendPasswordResetEmail(email);
+      return 'Successfully Sent Reset Password.';
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+      throw new Error('Failed to send password reset email. Please try again later.');
     }
   }
 

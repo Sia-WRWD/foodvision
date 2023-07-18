@@ -62,7 +62,6 @@ export class SearchComponent {
 
   checkLoggedIn() {
     this.isLoggedIn = sessionStorage.getItem("isLoggedIn")!;
-    console.log(this.isLoggedIn);
     if (this.isLoggedIn) {
       const uid = sessionStorage.getItem("token");
       this.userService.fetchUserInfo(uid).subscribe(res => {
@@ -181,9 +180,6 @@ export class SearchComponent {
     this.getSelectedAllergens();
     this.openProgressDialog();
     this.classify();
-    if (this.isLoggedIn) {
-      this.createHistory();
-    }
   }
 
   async classify() {
@@ -202,6 +198,9 @@ export class SearchComponent {
           this.response = data.predicted_label;
           sessionStorage.setItem("classifiedFood", this.response); //Save Classified Food's Name.
           this.getClassifiedFoodData(this.response); //Get Classified Food's Data from Firebase.
+          if (this.isLoggedIn) {
+            this.createHistory(this.response);
+          }
           this.statusMessage = "Successfully classified the food!"
           this.status = "success";
         },
@@ -251,9 +250,9 @@ export class SearchComponent {
     }
   }
 
-  createHistory() {
+  createHistory(food: string) {
     const token = sessionStorage.getItem('token')!;
-    const food_classified = sessionStorage.getItem("classifiedFood");
+    const food_classified = food;
     const last_added = this.getFormattedDate();
 
     this.userService.uploadImage().subscribe(res => {

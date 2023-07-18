@@ -19,6 +19,7 @@ export class InformationComponent {
   selectedAllergens: string[] = [];
   classifiedFoodData: any;
   classifiedFood: string = "";
+  classifiedFoodRecipe: string = "";
   matchedAllergens: string[] = [];
 
   badgeText!: string;
@@ -62,6 +63,7 @@ export class InformationComponent {
           .split('-')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
+        this.classifiedFoodRecipe = this.classifiedFood.toLowerCase().replace(/\s+/g, '_'); //for Recipe
       } else { //If not shared, but classified.
         if (!sessionStorage.getItem("classifiedFood") && !JSON.parse(sessionStorage.getItem("foodInfo")!)) {
           this.router.navigate(["/search"]);
@@ -89,6 +91,7 @@ export class InformationComponent {
     //Get Food Name
     this.classifiedFood = sessionStorage.getItem("classifiedFood")!;
     this.classifiedFood = this.classifiedFood.replace(/"/g, '');
+    this.classifiedFoodRecipe = this.classifiedFood.toLowerCase().replace(/\s+/g, '_'); //for Recipe
   }
 
   setFoodImage(shared: boolean, foodName: string) {
