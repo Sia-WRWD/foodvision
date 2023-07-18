@@ -31,6 +31,18 @@ export class ForgotPasswordComponent {
         this.sharedService.showSnackbar("Something went wrong, please try again later! ⚠️", "ok");
       }
     })
-    this.email.setValue("");
+    this.email.reset();
+  }
+
+  getErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'Field cannot be empty!';
+    }
+
+    if (this.email.hasError('email')) {
+      return 'Not a valid email!';
+    }
+
+    return '';
   }
 }
