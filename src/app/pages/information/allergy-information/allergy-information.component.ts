@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class AllergyInformationComponent {
   @Input() allergens!: string[];
+
   symptoms: any =
     [
       { name: "Eczema ✅", img: "../../../../assets/symptom-img/eczema.jpg", description: "Dry, itchy, inflamed skin.", threatLevel: "Low" },

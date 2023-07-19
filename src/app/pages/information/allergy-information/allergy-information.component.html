@@ -1,7 +1,7 @@
 <div class="allergy-modal-container">
     <div class="allergens-section">
         <p class="h2 heading">Allergens Detected</p>
-        <ng-container *ngIf="!allergens">
+        <ng-container *ngIf="allergens.length == 0">
             <div class="no-allergen-container">
                 <mat-icon class="check-mark">check_circle_outline</mat-icon>
                 <p class="h3">No Allergens Detected, Safe for Consumption!</p>

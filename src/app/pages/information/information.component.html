@@ -92,7 +92,7 @@
 </div>
 
 <ng-template #allergenInfo>
-    <mat-dialog-content class="allergen-dialog">
+    <mat-dialog-content class="allergen-dialog" *ngIf="classifiedFoodData">
         <app-allergy-information [allergens]="matchedAllergens"></app-allergy-information>
     </mat-dialog-content>
 </ng-template>
@@ -100,3 +100,18 @@
 <ng-container *ngIf="classifiedFoodData && classifiedFood">
     <app-social-media [foodData]="classifiedFoodData" [foodName]="classifiedFood"></app-social-media>
 </ng-container>
+
+<ng-template #allergenWarning>
+    <mat-dialog-content class="allergen-warning">
+        <p class="h1 allergen-warning-title" mat-dialog-title>Allergens Detected!</p>
+        <div mat-dialog-content>
+            <p class="h2 allergen-warning-msg">
+                The allergens you have selected are detected in the food. Please exercise caution when consuming. 
+                Click the warning button on the bottom left for more information.
+            </p>
+        </div>
+        <div mat-dialog-actions>
+            <button class="btnOk" mat-raised-button (click)="closeAllergenWarning()">Ok</button>
+        </div>
+    </mat-dialog-content>
+</ng-template>

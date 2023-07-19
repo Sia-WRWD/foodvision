@@ -310,6 +310,37 @@ mat-dialog-content {
     width: 50vw !important;
 }
 
+.allergen-warning {
+    background-color: red;
+}
+
+.allergen-warning-title {
+    color: var(--accent) !important;
+    font-size: 2rem !important;
+    text-shadow: 1px 2px 3px black !important;
+    text-align: center;
+    line-height: 1.5 !important;
+}
+
+.allergen-warning-msg {
+    text-align: center;
+    color: white;
+    line-height: 1.5;
+    text-shadow: 1px 2px 3px black;
+    font-size: 1.5rem !important;
+}
+
+.btnOk {
+    width: 100%;
+    height: 60px;
+    font-size: 2rem;
+    font-weight: bolder;
+    text-shadow: 1px 2px 3px black;
+    background: var(--lighter-primary);
+    color: #ffffff;
+    box-shadow: 1px 2px 3px black;
+}
+
 //Responsive
 @media screen and (min-width: 992px) and (max-width: 1399px) {
     .left-container {
@@ -376,6 +407,21 @@ mat-dialog-content {
     .pie {
         width: 150px !important;
         height: 150px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .allergen-warning-msg {
+        font-size: 1rem !important;
+    }
+
+    .allergen-warning-title {
+        font-size: 1.5rem !important;
+    }
+
+    .btnOk {
+        font-size: 1.5rem !important;
+        height: 50px !important;
     }
 }
 

@@ -15,6 +15,7 @@ import { DOCUMENT } from '@angular/common';
 export class InformationComponent {
   @ViewChild('foodImage', { static: false }) foodImage!: ElementRef<HTMLImageElement>;
   @ViewChild('allergenInfo') allergenInfo!: TemplateRef<any>;
+  @ViewChild('allergenWarning') allergenWarning!: TemplateRef<any>;
 
   selectedAllergens: string[] = [];
   classifiedFoodData: any;
@@ -126,6 +127,8 @@ export class InformationComponent {
             this.matchedAllergens.push(allergen); // Add the matched allergen to the array
           }
         });
+
+        this.showAllergenWarning();
       }
     }
   }
@@ -180,5 +183,13 @@ export class InformationComponent {
     } else {
       this.showFullText = true;
     }
+  }
+
+  showAllergenWarning() {
+    this.dialog.open(this.allergenWarning);
+  }
+
+  closeAllergenWarning() {
+    this.dialog.closeAll();
   }
 }
