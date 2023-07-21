@@ -19,6 +19,7 @@ export class RecipeComponent {
 
   userInfo: any;
   isBookmarked: boolean = false;
+  isLoggedIn: boolean = false;
 
   faClock = faClock;
   faUpRightFromSquare = faUpRightFromSquare;
@@ -35,6 +36,7 @@ export class RecipeComponent {
   ngOnInit() {
     this.getRecipeInfo();
     this.getUserInfo();
+    this.getLoginStatus();
   }
 
   getRecipeInfo() {
@@ -50,6 +52,16 @@ export class RecipeComponent {
 
   getFoodName() {
     return this.recipeFood.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+
+  getLoginStatus() {
+    const status = sessionStorage.getItem("isLoggedIn");
+
+    if (status) {
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
+    }
   }
 
   AddStrikeThrough(sectionIndex: number, ingredientIndex: number) {

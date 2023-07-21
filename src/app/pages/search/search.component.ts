@@ -1,8 +1,8 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { faEgg, faWheatAlt, faCow, faTree, faShrimp, faFishFins, faSeedling, faPlateWheat } from '@fortawesome/free-solid-svg-icons';
 import { SharedService } from '../shared/shared.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { DatePipe } from '@angular/common';
@@ -20,6 +20,7 @@ export class SearchComponent {
   @ViewChild('progressLoader') progressLoader!: TemplateRef<any>;
   @ViewChild('imageInput') imageInput!: any;
   @ViewChild('imagePreview') imagePreview!: HTMLElement;
+  @ViewChild('elementCanvas', {static: false}) canvas!: ElementRef<HTMLCanvasElement>;
   hasFile: boolean = false;
   response: string = "";
   classifiedFoodData: any;
@@ -54,7 +55,7 @@ export class SearchComponent {
 
   ngOnInit() {
     this.checkLoggedIn();
-
+    
     if (!this.isLoggedIn) {
       this.checkExistingAllergens();
     }
@@ -124,16 +125,17 @@ export class SearchComponent {
 
   onFileChange(event: Event): void {
     const files = (event.target as HTMLInputElement)?.files;
-
+  
     if (files && files.length > 0) {
       const file = files[0];
       const fileType = file.type;
-
+  
       // Validate File Type
       if (fileType.startsWith('image/')) {
         this.hasFile = true;
         this.saveImageFile(file);
         this.readImageFile(file);
+  
         //Message Handler to Inform user.
         this.sharedService.showSnackbar("Successfully uploaded file! 💯", "ok");
       } else {
@@ -147,14 +149,41 @@ export class SearchComponent {
 
   saveImageFile(file: File): void {
     const reader = new FileReader();
-
+  
     reader.onload = (e) => {
       const fileDataUrl = e.target?.result as string;
-      sessionStorage.setItem('originalImage', fileDataUrl); // Save the file data URL in session storage
+  
+      // Create a promise to handle image loading and canvas drawing
+      const loadImagePromise = new Promise<void>((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => {
+          console.log(document.getElementById("elementCanvas"));
+          const canvas = this.canvas.nativeElement;
+          const context = canvas.getContext('2d');
+          context?.clearRect(0, 0, canvas.width, canvas.height);
+          canvas.width = image.width;
+          canvas.height = image.height;
+          context?.drawImage(image, 0, 0);
+          resolve();
+        };
+        image.src = fileDataUrl;
+        image.onerror = reject;
+      });
+  
+      // After the canvas drawing is completed, save the modified image data URL to session storage
+      loadImagePromise.then(() => {
+        const canvas = this.canvas.nativeElement;
+        const modifiedImageDataURL = canvas.toDataURL('image/jpeg'); // Use 'image/png' for PNG format
+        sessionStorage.setItem('originalImage', modifiedImageDataURL);
+      }).catch((error) => {
+        console.error('Error loading and drawing image:', error);
+      });
     };
-
+  
     reader.readAsDataURL(file);
   }
+  
+  
 
   readImageFile(file: File): void {
     const reader = new FileReader();
@@ -193,33 +222,40 @@ export class SearchComponent {
       const formData = new FormData();
       formData.append('image', blob, 'to-predict.jpg');
 
-      this.http.post('http://localhost:5000/predict', formData).subscribe(
+      const headers = new HttpHeaders();
+      headers.set('Access-Control-Allow-Origin', '*'); // Set the CORS header
+      // Add any other headers if needed
+      // headers.set('Authorization', 'Bearer YourAuthToken');
+
+      this.http.post('https://hyena-great-jay.ngrok-free.app/', formData, { headers }).subscribe(
         (data: any) => {
           this.response = data.predicted_label;
-          sessionStorage.setItem("classifiedFood", this.response); //Save Classified Food's Name.
+          sessionStorage.setItem('classifiedFood', this.response); //Save Classified Food's Name.
           this.getClassifiedFoodData(this.response); //Get Classified Food's Data from Firebase.
           if (this.isLoggedIn) {
             this.createHistory(this.response);
           }
-          this.statusMessage = "Successfully classified the food!"
-          this.status = "success";
+          this.statusMessage = 'Successfully classified the food!';
+          this.status = 'success';
         },
         (error: any) => {
           if (error.status === 0) {
-            this.statusMessage = "Something is wrong with the server, please try again later! 🛠️";
+            this.statusMessage = 'Something is wrong with the server, please try again later! 🛠️';
           } else if (error.status === 400) {
-            this.statusMessage = "Something is wrong with the file sent, please try again later! ⚠️";
+            this.statusMessage = 'Something is wrong with the file sent, please try again later! ⚠️';
           } else if (error.status === 500) {
-            this.statusMessage = "Input is empty or incompatible image type! 😞";
+            this.statusMessage = 'Input is empty or incompatible image type! 😞';
           }
-          this.status = "failure";
+          this.status = 'failure';
           this.isLoading = false;
         }
       );
     } catch (error) {
-      //console.error(error);
+      // Handle error
+      // console.error(error);
     }
   }
+
 
   getClassifiedFoodData(food: string) {
     this.sharedService.getFoodInfo(food).subscribe((data: any) => {

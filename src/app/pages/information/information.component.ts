@@ -13,7 +13,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./information.component.scss']
 })
 export class InformationComponent {
-  @ViewChild('foodImage', { static: false }) foodImage!: ElementRef<HTMLImageElement>;
+  @ViewChild('foodImage') foodImage!: ElementRef<HTMLImageElement>;
   @ViewChild('allergenInfo') allergenInfo!: TemplateRef<any>;
   @ViewChild('allergenWarning') allergenWarning!: TemplateRef<any>;
 
@@ -72,6 +72,7 @@ export class InformationComponent {
 
         this.getFoodData();
         this.calFoodCalorie();
+        this.setFoodImage(false, "");
       }
     })
   }
@@ -80,7 +81,6 @@ export class InformationComponent {
     if (this.sharedParam) {
       this.setFoodImage(true, this.foodParam);
     } else {
-      this.setFoodImage(false, "");
       this.checkFoodAllergens(false);
       this.setBadgeText();
     }
@@ -101,9 +101,9 @@ export class InformationComponent {
 
       this.foodImage.nativeElement.setAttribute('src', foodImgUrl);
     } else {
-      const foodImgUrl = sessionStorage.getItem("originalImage")!;
+      const foodImgUrl = sessionStorage.getItem("originalImage");
 
-      this.foodImage.nativeElement.setAttribute('src', foodImgUrl);
+      this.foodImage.nativeElement.setAttribute('src', foodImgUrl!);
     }
   }
 

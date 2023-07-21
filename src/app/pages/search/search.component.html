@@ -5,10 +5,11 @@
                 <label for="image-input" class="drop-container">
                     <span class="drop-title">Drop files here</span>
                     or
-                    <input type="file" id="image-input" accept="image/*" (change)="onFileChange($event)"
+                    <input type="file" id="image-input" accept="capture=camera,image/*" (change)="onFileChange($event)"
                         required #imageInput>
                 </label>
             </ng-container>
+            <canvas #elementCanvas style="display: none;" id="elementCanvas"></canvas>
             <ng-template #showImage>
                 <div class="image-preview-container d-flex justify-content-center">
                     <img id="image-preview" alt="image-preview.jpg" [src]="imgUrl" #imagePreview />

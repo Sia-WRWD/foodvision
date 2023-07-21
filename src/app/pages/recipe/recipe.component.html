@@ -17,7 +17,7 @@
                 </a>
             </mat-chip-row>
         </div>
-        <div class="bookmark" *ngIf="!isBookmarked">
+        <div class="bookmark" *ngIf="!isBookmarked && isLoggedIn">
             <mat-chip-row class="chip-bookmark" (click)="addToBookmark()">
                 <fa-icon [icon]="faBookmark" class="chip-time-icon"></fa-icon>
                 <span class="chip-bookmark-text">
@@ -25,7 +25,7 @@
                 </span>
             </mat-chip-row>
         </div>
-        <div class="bookmark" *ngIf="isBookmarked">
+        <div class="bookmark" *ngIf="isBookmarked && isLoggedIn">
             <mat-chip-row class="chip-bookmark-remove" (click)="removeFromBookmark()">
                 <fa-icon [icon]="faCircleXmark" class="chip-time-icon"></fa-icon>
                 <span class="chip-bookmark-text">
