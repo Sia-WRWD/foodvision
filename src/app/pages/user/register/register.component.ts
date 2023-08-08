@@ -40,7 +40,7 @@ export class RegisterComponent {
         if (RegisterResult == "email-already-in-use") {
           this.sharedService.showSnackbar("The email is already in use. Please sign in or try a different email. ❌", "ok");
         } else if (RegisterResult == "register-success") {
-          // window.location.href = "login";
+          window.location.href = "login";
         }
       }).catch(error => {
         this.sharedService.showSnackbar("Something Went Wrong, Please Contact the Admin! ❌", "ok");

@@ -20,7 +20,7 @@ export class SearchComponent {
   @ViewChild('progressLoader') progressLoader!: TemplateRef<any>;
   @ViewChild('imageInput') imageInput!: any;
   @ViewChild('imagePreview') imagePreview!: HTMLElement;
-  @ViewChild('elementCanvas', {static: false}) canvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('elementCanvas', { static: false }) canvas!: ElementRef<HTMLCanvasElement>;
   hasFile: boolean = false;
   response: string = "";
   classifiedFoodData: any;
@@ -55,7 +55,7 @@ export class SearchComponent {
 
   ngOnInit() {
     this.checkLoggedIn();
-    
+
     if (!this.isLoggedIn) {
       this.checkExistingAllergens();
     }
@@ -125,19 +125,16 @@ export class SearchComponent {
 
   onFileChange(event: Event): void {
     const files = (event.target as HTMLInputElement)?.files;
-  
+
     if (files && files.length > 0) {
       const file = files[0];
       const fileType = file.type;
-  
+
       // Validate File Type
       if (fileType.startsWith('image/')) {
         this.hasFile = true;
         this.saveImageFile(file);
-        this.readImageFile(file);
-  
-        //Message Handler to Inform user.
-        this.sharedService.showSnackbar("Successfully uploaded file! 💯", "ok");
+
       } else {
         this.imageInput.nativeElement.value = '';
         this.hasFile = false;
@@ -149,10 +146,10 @@ export class SearchComponent {
 
   saveImageFile(file: File): void {
     const reader = new FileReader();
-  
+
     reader.onload = (e) => {
       const fileDataUrl = e.target?.result as string;
-  
+
       // Create a promise to handle image loading and canvas drawing
       const loadImagePromise = new Promise<void>((resolve, reject) => {
         const image = new Image();
@@ -169,35 +166,38 @@ export class SearchComponent {
         image.src = fileDataUrl;
         image.onerror = reject;
       });
-  
+
       // After the canvas drawing is completed, save the modified image data URL to session storage
       loadImagePromise.then(() => {
         const canvas = this.canvas.nativeElement;
         const modifiedImageDataURL = canvas.toDataURL('image/jpeg'); // Use 'image/png' for PNG format
         sessionStorage.setItem('originalImage', modifiedImageDataURL);
+        this.readImageFileFromCanvas();
+        //Message Handler to Inform user.
+        this.sharedService.showSnackbar("Successfully uploaded file! 💯", "ok");
       }).catch((error) => {
         console.error('Error loading and drawing image:', error);
       });
     };
-  
+
     reader.readAsDataURL(file);
   }
-  
-  
 
-  readImageFile(file: File): void {
-    const reader = new FileReader();
 
-    reader.onload = (e) => {
-      this.imgUrl = e.target?.result as string;
-    };
 
-    reader.readAsDataURL(file);
+  readImageFileFromCanvas(): void {
+    // Read the modified image data URL from session storage
+    const modifiedImageDataURL = sessionStorage.getItem('originalImage');
+    if (modifiedImageDataURL) {
+      // Set the imgUrl to the modified image data URL
+      this.imgUrl = modifiedImageDataURL;
+    }
   }
 
   removeImage() {
     this.hasFile = false;
     sessionStorage.removeItem('originalImage');
+    this.imgUrl = "";
   }
 
   getSelectedAllergens() {
@@ -227,7 +227,7 @@ export class SearchComponent {
       // Add any other headers if needed
       // headers.set('Authorization', 'Bearer YourAuthToken');
 
-      this.http.post('https://hyena-great-jay.ngrok-free.app/', formData, { headers }).subscribe(
+      this.http.post('https://hyena-great-jay.ngrok-free.app/predict', formData, { headers }).subscribe(
         (data: any) => {
           this.response = data.predicted_label;
           sessionStorage.setItem('classifiedFood', this.response); //Save Classified Food's Name.
