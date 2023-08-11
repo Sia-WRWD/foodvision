@@ -27,6 +27,8 @@ export class ForgotPasswordComponent {
     this.userService.sendPasswordResetEmail(email).then(res => {
       if (res == "Successfully Sent Reset Password.") {
         this.sharedService.showSnackbar("Password reset email has been sent, please check your email! ✅", "ok");
+      } else if (res == "Error sending password reset email") {
+        this.sharedService.showSnackbar("The email you provided do not exist, please try again later! ❌", "ok");
       } else {
         this.sharedService.showSnackbar("Something went wrong, please try again later! ⚠️", "ok");
       }

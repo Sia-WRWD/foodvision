@@ -201,8 +201,7 @@ export class UserService {
       await this.afAuth.sendPasswordResetEmail(email);
       return 'Successfully Sent Reset Password.';
     } catch (error) {
-      console.error('Error sending password reset email:', error);
-      throw new Error('Failed to send password reset email. Please try again later.');
+      return 'Error sending password reset email';
     }
   }
 
