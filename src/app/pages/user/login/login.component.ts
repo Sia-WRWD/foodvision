@@ -27,12 +27,12 @@ export class LoginComponent {
     }
   }
 
-  getErrorMessage() {
-    if (this.email.hasError('required') || this.password.hasError('required')) {
+  getErrorMessage(control: FormControl) {
+    if (control.hasError('required')) {
       return 'Field cannot be empty!';
     }
 
-    return this.email.hasError('email') ? 'Not a valid email!' : '';
+    return control.hasError('email') ? 'Not a valid email!' : '';
   }
 
   verifyLoginDetails() {

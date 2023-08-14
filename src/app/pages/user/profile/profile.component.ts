@@ -73,16 +73,16 @@ export class ProfileComponent {
     this.selectedAllergens = null;
   }
 
-  getErrorMessage() {
-    if (this.name.hasError('required') || this.username.hasError('required')) {
+  getErrorMessage(control: FormControl) {
+    if (control.hasError('required')) {
       return 'Field cannot be empty!';
     }
 
-    if (this.name.hasError('invalidName')) {
+    if (control.hasError('invalidName')) {
       return 'Not a valid name! (A-Z only)';
     }
 
-    if (this.username.hasError('invalidUsername')) {
+    if (control.hasError('invalidUsername')) {
       return 'Not a valid username! (A-Z, 0-9 only)';
     }
 

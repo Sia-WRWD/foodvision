@@ -36,12 +36,12 @@ export class ForgotPasswordComponent {
     this.email.reset();
   }
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
+  getErrorMessage(control: FormControl) {
+    if (control.hasError('required')) {
       return 'Field cannot be empty!';
     }
 
-    if (this.email.hasError('email')) {
+    if (control.hasError('email')) {
       return 'Not a valid email!';
     }
 

@@ -8,7 +8,7 @@
                     <input matInput class="email" type="email" [formControl]="email" placeholder="food@example.com"
                         required />
                     <mat-error *ngIf="email.invalid">
-                        {{getErrorMessage()}}
+                        {{getErrorMessage(email)}}
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="control w-100" appearance="outline"> <!--Password-->
@@ -16,7 +16,7 @@
                     <input matInput class="password" type="password" [formControl]="password" placeholder="food@1234"
                         required />
                     <mat-error *ngIf="password.invalid">
-                        {{getErrorMessage()}}
+                        {{getErrorMessage(password)}}
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -26,14 +26,14 @@
                     <input matInput class="username" type="name" [formControl]="username" placeholder="foodie101"
                         required />
                     <mat-error *ngIf="username.invalid">
-                        {{getErrorMessage()}}
+                        {{getErrorMessage(username)}}
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="control w-100" appearance="outline"> <!--Name-->
                     <mat-label>Name</mat-label>
                     <input matInput class="name" type="name" [formControl]="name" placeholder="John Foodman" required />
                     <mat-error *ngIf="name.invalid">
-                        {{getErrorMessage()}}
+                        {{getErrorMessage(name)}}
                     </mat-error>
                 </mat-form-field>
             </div>

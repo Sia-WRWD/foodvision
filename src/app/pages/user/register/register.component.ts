@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { SharedService } from '../../shared/shared.service';
 import { UserService } from '../user.service';
 import { nameValidator, usernameValidator } from '../../shared/validators/input-validator';
-import { MatSelectionListChange } from '@angular/material/list';
 
 @Component({
   selector: 'app-register',
@@ -47,21 +46,20 @@ export class RegisterComponent {
       });
   }
 
-  getErrorMessage() {
-    if (this.email.hasError('required') || this.password.hasError('required')
-      || this.name.hasError('required') || this.username.hasError('required')) {
+  getErrorMessage(control: FormControl) {
+    if (control.hasError('required')) {
       return 'Field cannot be empty!';
     }
 
-    if (this.email.hasError('email')) {
+    if (control.hasError('email')) {
       return 'Not a valid email!';
     }
 
-    if (this.name.hasError('invalidName')) {
+    if (control.hasError('invalidName')) {
       return 'Not a valid name! (A-Z only)';
     }
 
-    if (this.username.hasError('invalidUsername')) {
+    if (control.hasError('invalidUsername')) {
       return 'Not a valid username! (A-Z, 0-9 only)';
     }
 

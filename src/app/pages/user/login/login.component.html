@@ -8,7 +8,7 @@
                     <input matInput class="email" type="email" [formControl]="email" placeholder="food@example.com"
                         required />
                     <mat-error *ngIf="email.invalid">
-                        {{getErrorMessage()}}
+                        {{getErrorMessage(email)}}
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -18,7 +18,7 @@
                     <input matInput class="password" type="password" [formControl]="password" placeholder="food@1234"
                         required />
                     <mat-error *ngIf="password.invalid">
-                        {{getErrorMessage()}}
+                        {{getErrorMessage(password)}}
                     </mat-error>
                 </mat-form-field>
             </div>
