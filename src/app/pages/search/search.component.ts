@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 export class SearchComponent {
 
   imgUrl: string = "";
+  originalUrl: string = "";
   @ViewChild('imageEditor') imageEditor!: TemplateRef<any>;
   @ViewChild('progressLoader') progressLoader!: TemplateRef<any>;
   @ViewChild('imageInput') imageInput!: any;
@@ -112,13 +113,9 @@ export class SearchComponent {
       data: { imageUrl: this.imgUrl }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.sharedService.croppedImage$.subscribe(croppedImage => {
-        if (croppedImage) {
-          this.imgUrl = croppedImage;
-          sessionStorage.setItem("croppedImage", this.imgUrl);
-        }
-      });
+    this.sharedService.croppedImage$.subscribe(croppedImage => {
+      this.imgUrl = croppedImage;
+      sessionStorage.setItem("croppedImage", this.imgUrl);
     });
 
   }
@@ -154,7 +151,6 @@ export class SearchComponent {
       const loadImagePromise = new Promise<void>((resolve, reject) => {
         const image = new Image();
         image.onload = () => {
-          console.log(document.getElementById("elementCanvas"));
           const canvas = this.canvas.nativeElement;
           const context = canvas.getContext('2d');
           context?.clearRect(0, 0, canvas.width, canvas.height);
@@ -173,6 +169,7 @@ export class SearchComponent {
         const modifiedImageDataURL = canvas.toDataURL('image/jpeg'); // Use 'image/png' for PNG format
         sessionStorage.setItem('originalImage', modifiedImageDataURL);
         this.readImageFileFromCanvas();
+        this.sharedService.setCroppedImage(this.imgUrl);
         //Message Handler to Inform user.
         this.sharedService.showSnackbar("Successfully uploaded file! 💯", "ok");
       }).catch((error) => {
@@ -191,12 +188,14 @@ export class SearchComponent {
     if (modifiedImageDataURL) {
       // Set the imgUrl to the modified image data URL
       this.imgUrl = modifiedImageDataURL;
+      this.originalUrl = this.imgUrl;
     }
   }
 
   removeImage() {
     this.hasFile = false;
     sessionStorage.removeItem('originalImage');
+    sessionStorage.removeItem('croppedImage');
     this.imgUrl = "";
   }
 

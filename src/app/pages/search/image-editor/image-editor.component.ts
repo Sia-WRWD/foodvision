@@ -14,6 +14,7 @@ export class ImageEditorComponent {
   @ViewChild('canvasConfirm', { static: true }) canvasConfirm!: ElementRef;
   @ViewChild('canvasMain', { static: true }) canvasMain!: ElementRef;
   @Input() imageUrl!: string;
+  @Input() oriUrl!: string;
 
   constructor(private sharedService: SharedService) { }
 
@@ -58,7 +59,10 @@ export class ImageEditorComponent {
   restore() {
     this.hideConfirmCanvas();
     this.showMainCanvas();
+    this.imageUrl = this.oriUrl;
     this.croppedData = "";
+    sessionStorage.setItem("croppedImage", this.oriUrl);
+    this.sharedService.setCroppedImage(this.oriUrl);
   }
 
   hideConfirmCanvas() {
