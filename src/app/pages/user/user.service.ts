@@ -50,7 +50,7 @@ export class UserService {
         this.LoginResult = "login-success";
       })
       .catch(err => {
-        if (err.message.includes("no user record")) {
+        if (err.message.includes("no user record") || err.message.includes("password is invalid")) {
           this.LoginResult = "no-user-record";
         } else {
           this.LoginResult = "There's Error in Signing In, Please Contact the Admin!";
