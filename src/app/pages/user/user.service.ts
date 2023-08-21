@@ -86,6 +86,8 @@ export class UserService {
       }).catch(error => {
         if (error.message.includes("email-already-in-use")) {
           this.RegisterResult = "email-already-in-use";
+        } else if (error.message.includes("at least 6 characters")) {
+          this.RegisterResult = "weak password";
         }
       });
 

@@ -37,9 +37,11 @@ export class RegisterComponent {
     this.userService.Register(email, name, password, username, allergens).then(
       (RegisterResult) => {
         if (RegisterResult == "email-already-in-use") {
-          this.sharedService.showSnackbar("The email is already in use. Please sign in or try a different email. ❌", "ok");
+          this.sharedService.showSnackbar("The email is already in use! Please sign in or try a different email. ❌", "ok");
         } else if (RegisterResult == "register-success") {
           window.location.href = "login";
+        } else if (RegisterResult == "weak password") {
+          this.sharedService.showSnackbar("Your password needs to be more than 6 characters! ❌", "ok");
         }
       }).catch(error => {
         this.sharedService.showSnackbar("Something Went Wrong, Please Contact the Admin! ❌", "ok");
