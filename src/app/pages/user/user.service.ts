@@ -65,7 +65,6 @@ export class UserService {
   }
 
   async Register(email: string, name: string, password: string, username: string, allergens: string) {
-    const loggedInTime = JSON.stringify(new Date().getTime());
 
     await this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(userCreds => {
