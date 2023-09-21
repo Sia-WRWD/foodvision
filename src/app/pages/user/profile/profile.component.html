@@ -119,7 +119,10 @@
                                 {{ parseItem(item)?.food_classified | foodNamePipe }}
                             </mat-panel-title>
                             <mat-panel-description>
-                                {{ parseItem(item)?.last_added }}
+                                <div class="d-flex justify-content-between w-100 classi-desc">
+                                    <p class="mb-0">{{ parseItem(item)?.last_added }}</p>
+                                    <p class="mb-0">{{ parseItem(item)?.accuracy * 100 | number:'1.2-2' }}%</p>
+                                </div>
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <a href="{{ parseItem(item)?.input }}" target="_blank" style="text-decoration: none;">

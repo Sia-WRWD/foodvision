@@ -206,6 +206,12 @@
     }
 }
 
+@media screen and (max-width: 440px) {
+    .classi-desc {
+        flex-direction: column !important;
+    }
+}
+
 @media screen and (max-width: 388px) {
     .btnActions-container {
         flex-wrap: wrap;
@@ -215,5 +221,11 @@
     .btnAction {
         width: 100% !important;
         margin-left: 0 !important;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .profile-container {
+        padding: 20px !important;
     }
 }

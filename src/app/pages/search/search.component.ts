@@ -44,6 +44,7 @@ export class SearchComponent {
   isLoggedIn: string = "";
   userAllergens: string[] = [];
   userInfo: any;
+  accuracy: any;
 
   constructor(
     public dialog: MatDialog,
@@ -229,10 +230,12 @@ export class SearchComponent {
       this.http.post('https://hyena-great-jay.ngrok-free.app/predict', formData, { headers }).subscribe(
         (data: any) => {
           this.response = data.predicted_label;
+          this.accuracy = data.accuracy;
+
           sessionStorage.setItem('classifiedFood', this.response); //Save Classified Food's Name.
           this.getClassifiedFoodData(this.response); //Get Classified Food's Data from Firebase.
           if (this.isLoggedIn) {
-            this.createHistory(this.response);
+            this.createHistory(this.response, this.accuracy);
           }
           this.statusMessage = 'Successfully classified the food!';
           this.status = 'success';
@@ -285,13 +288,14 @@ export class SearchComponent {
     }
   }
 
-  createHistory(food: string) {
+  createHistory(food: string, confidence: string) {
     const token = sessionStorage.getItem('token')!;
     const food_classified = food;
     const last_added = this.getFormattedDate();
+    const accuracy = confidence;
 
     this.userService.uploadImage().subscribe(res => {
-      const formattedData = `{"input": "${res}", "food_classified": "${food_classified}", "last_added": "${last_added}"}`
+      const formattedData = `{"input": "${res}", "food_classified": "${food_classified}", "last_added": "${last_added}", "accuracy": "${accuracy}"}`
       this.userService.updateHistory(token, formattedData);
     });
   }
