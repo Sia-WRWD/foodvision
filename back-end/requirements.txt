@@ -1,0 +1,6 @@
+Flask
+flask-restful
+tensorflow
+numpy
+Pillow
+flask-cors

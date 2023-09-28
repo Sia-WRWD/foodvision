@@ -42,4 +42,5 @@ testem.log
 Thumbs.db
 
 #Back-End
-back-end
+back-end/foodvision_model_customized
+back-end/foodvision_model_pretrained
